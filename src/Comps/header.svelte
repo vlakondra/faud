@@ -1,10 +1,18 @@
 <script>
-    // import { time } from "./store.js";
-    let time = new Date();
+    import { onMount } from "svelte";
+
     export let onBurgerClick;
 
     import Fa from "svelte-fa";
     import { faBars } from "@fortawesome/free-solid-svg-icons";
+
+    let time = new Date();
+    onMount(() => {
+        let intr = setInterval(() => {
+            time = new Date();
+        }, 1000);
+        return () => clearInterval(intr);
+    });
 
     // https://cweili.github.io/svelte-fa/
     //https://fontawesome.com/v5/icons/bars?s=solid
@@ -61,11 +69,12 @@
         cursor: pointer;
     }
     .caption {
+        text-align: left;
         text-shadow: 1px 1px 1px rgb(75 50 31);
         color: #fff;
         letter-spacing: 1px;
         line-height: 1em;
-        font-weight: 100;
+        font-weight: 400;
     }
     .caption-wrapp {
         display: flex;
@@ -78,17 +87,18 @@
             font-size: 2em;
         }
         .caption {
-            font-size: 1.85em;
+            font-size: 1.75em;
         }
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: 520px) {
         .header {
             padding: 5px 5px;
             margin: 3px 0 0px 0;
         }
         .caption {
             font-size: 5.5vw;
+            letter-spacing: 0px;
         }
         .kv-burger {
             font-size: 1.75em;
