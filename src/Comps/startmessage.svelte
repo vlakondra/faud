@@ -10,13 +10,16 @@
     let curr_date = new Date();
     let date_opts = { month: "long" };
     let next_month = new Date(new Date().setMonth(new Date().getMonth() + 1));
-    const [error, data] = iniData();
+
+    //const [error, data] = iniData();
+    iniData();
+    //console.log("Data", data);
 </script>
 
-<!-- {#if $data.YearList}
+<!-- {#if $data.length}
     <h1>{"loading"}</h1>
-    {#each $data.YearList as y}
-        <p>{y.Year_ID}</p>
+    {#each $data as y}
+        <p>{y.FormEduName}</p>
     {/each}
 {/if} -->
 

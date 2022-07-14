@@ -1,4 +1,4 @@
-import { readable,writable } from 'svelte/store';
+import { readable, writable } from 'svelte/store'
 // https://svelte.dev/repl/b2d671b8119845ca903667f1b3a96e31?version=3.37.0
 
 // //часы для header'a
@@ -13,15 +13,16 @@ import { readable,writable } from 'svelte/store';
 // });
 
 
-export const load_ini_data= writable(false)
-export const load_sched_data= writable(false)
+export const load_ini_data= writable(false) //индикатор загрузки ини-данных
+export const ini_data = writable({}) // ини-данные
+export const err_ini_data= writable(false) //сообщение об ошибке при загр. ини-данных
 
-export const err_ini_data= writable(false)
+export const load_sched_data= writable(false)
 export const err_sched_data= writable(false)
 
-export const depart_id = writable(null)
-export const teacher_id = writable(null)
-export const teacher_fio = writable(null)
+// export const depart_id = writable(null)
+// export const teacher_id = writable(null)
+// export const teacher_fio = writable(null)
 
 export const d_start = writable(null)
 export const d_end = writable(null)
@@ -36,47 +37,53 @@ const esc = encodeURIComponent;
 //     .join("&");
 // }
 //загрузка исходных данных: форма - курс - группа
-export default function (){
-
-    const url = "https://old.ursei.su/Services/GetGSSchedIniData";    //GetTeachersIniData?";
-    // const params = {
-    //   //почему работает с любой датой?
-    //   d: new Date().toISOString().slice(0, 10),
-    // };
-    //let query =  `d=${new Date().toISOString().slice(0, 10)}`// buildparams(params)
+// export default function (){
+export default  function (){
+    const url = "https://old.ursei.su/Services/GetGSSchedIniData"; 
 
     //const loading = writable(true) //оставить только data и export-переменные
     const error = writable(false)
 	const data = writable({})  
    
     async function get() {
-        // loading.set(true)
-        error.set(false)
         load_ini_data.set(true)
+        let year_id;
+        const cd = new Date()
         try {
             const response = await fetch(url,{},3000)
             const js = await response.json();
-            //const years = js['YearList'];
             if (js.hasOwnProperty('Error')){
-               // error.set(js.Error)
+               // обраб. ошибку остановки БД для архивации в 01.00
                 throw js.Error
             }
-            // if(new Date().getMonth()+1 < 8){
-            //   year_id=  years.filter(y=>y.EduYear.startWith(new Date().getFullYear()))[0][Year_ID]
-            // }
-            console.log('YY',js)
-            data.set(await years)// response.json())
+            else{
+              const years = js.YearList
+              //если тек. мес. < 8, то тек уч. год. => "тек.год -1 / тек.год"
+              //если >= 8 => "тек.год / тек.год + 1"
+              if(cd.getMonth() + 1 < 8){
+                 year_id = years.filter(y => y.EduYear.endsWith(cd.getFullYear()))[0]['Year_ID'];
+               }else if(cd.getMonth() + 1 >= 8){
+                 year_id = years.filter(y => y.EduYear.startsWith(cd.getFullYear()))[0]['Year_ID'];  
+               }
+              
+              const gstree= js.GSTree.filter(y => y.Year_ID===year_id)[0] 
+
+              //console.log('FormEdu',gstree.FormEdu)
+
+              data.set(await gstree.FormEdu);//Группы за определенный уч.год
+               await ini_data.set( gstree.FormEdu)
+              }
+            
+            // data.set(await gstree.FormEdu);// response.json())
         } catch(e) {
-            //error.set(e)
             err_ini_data.set(e)
         }
-        //loading.set(false)
         load_ini_data.set(false)
     }
 
     get()
 
-    return [ error,data];
+   // return [error, data];
 }
 
 export async function getSched(par){
