@@ -5,8 +5,6 @@
     //https://andybeckmann.com/blog/animating-height-with-javascript
     import Item from "./group.svelte";
 
-    export let state_drawer;
-
     export let lev = 0;
     export let nodes; //groups;
     export let name;
@@ -16,6 +14,9 @@
 
     let is_closed = true;
 
+    /**
+     * @param {{ target: Element; }} e
+     */
     function toggle(e) {
         e.target.classList.toggle("minus");
         e.target.classList.toggle("plus");
@@ -80,7 +81,8 @@
                     lev={lev + 1}
                 />
             {:else}
-                <Item item={obj[names[lev]]} />
+                <!-- <Item item={obj[names[lev]]} /> -->
+                <Item item={obj} />
             {/if}
         </li>
     {/each}

@@ -97,7 +97,7 @@
             margin: 3px 0 0px 0;
         }
         .caption {
-            font-size: 5.5vw;
+            font-size: 5vw;
             letter-spacing: 0px;
         }
         .kv-burger {

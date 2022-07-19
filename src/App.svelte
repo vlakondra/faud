@@ -1,33 +1,71 @@
 <script lang="javascript">
-  import Fa from "svelte-fa";
-  import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-
-  //import iniData from "./Comps/store";
-  import { ini_data } from "./Comps/store";
+  import { setContext } from "svelte";
+  import { fade } from "svelte/transition";
+  import { client_width, ini_data, err_sched_data } from "./Comps/store";
 
   // import viteLogo from "/vite.svg";
   // import svelteLogo from "./assets/svelte.svg";
+
+  import Schedule from "./Comps/schedule.svelte";
+  import ShahSched from "./Comps/shahsched.svelte";
+  import Errschedule from "./Comps/errschedule.svelte";
+
   import StartMessage from "./Comps/startmessage.svelte";
   import Drawer from "svelte-drawer-component";
+  import ViewFormat from "./Comps/viewformat.svelte";
+  import ResizeObserver from "svelte-resize-observer";
   import Groups from "./Comps/groups.svelte";
   import Header from "./Comps/header.svelte";
   import Progbar from "./Comps/prgbar.svelte";
+
+  import Fa from "svelte-fa";
+  import { faArrowCircleUp } from "@fortawesome/free-solid-svg-icons";
 
   let openDrawer = false;
   const TurnDrawer = () => {
     openDrawer = !openDrawer;
   };
 
-  console.log("inidata", ini_data);
+  setContext("turn_drawer", { TurnDrawer });
+
+  let showtable = true;
+  const ToggleSwitch = (/** @type {boolean} */ frm) => {
+    showtable = frm;
+  };
+
+  let scrolly = 5;
+  const scrollToTop = () => {
+    let hdr = document.getElementById("header");
+    if (hdr) {
+      hdr.scrollIntoView({
+        block: "start",
+        behavior: "smooth",
+      });
+    }
+  };
+
+  let w;
 </script>
 
+<svelte:window bind:scrollY={scrolly} />
+
+<svelte:head>
+  <title>Расписание групп</title>
+</svelte:head>
+
 <main class="kv-container ">
-  <!-- {#if $ini_data.length}
-    <h1>??{"loading"}</h1>
-    {#each $ini_data as y}
-      <p>!!{y.FormEduName}</p>
-    {/each}
-  {/if} -->
+  <ResizeObserver
+    on:resize={(e) => {
+      w = e.detail.clientWidth;
+      client_width.update(() => w);
+    }}
+  />
+
+  {#if scrolly > 100}
+    <div transition:fade on:click={scrollToTop} class="totop-box">
+      <Fa icon={faArrowCircleUp} color="#6565ed" size="2.5x" />
+    </div>
+  {/if}
 
   <Header onBurgerClick={TurnDrawer} />
   <Drawer
@@ -39,27 +77,46 @@
       <button on:click={() => (openDrawer = false)} class="delete is-medium" />
 
       {#if $ini_data.length}
-        <Groups
-          name="Выберите группу"
-          nodes={$ini_data}
-          state_drawer={TurnDrawer}
-        />
+        <div class="groups-wrapper" style="">
+          <Groups name="Выберите группу" nodes={$ini_data} />
+        </div>
       {/if}
+
+      <ViewFormat changeformat={ToggleSwitch} />
     </div>
   </Drawer>
   <Progbar />
   <StartMessage openDrawer={TurnDrawer} />
+
+  {#if $err_sched_data}
+    <!-- <div> -->
+    <Errschedule errmessage={$err_sched_data} />
+    <!-- </div> -->
+  {:else if showtable}
+    <Schedule />
+  {:else}
+    <ShahSched />
+  {/if}
 </main>
 
 <style lang="scss">
   // :global(body) {
   //   background-image: url("/bg.jpg"); -> см. minireset.sass
   // }
+
+  .totop-box {
+    position: fixed;
+    left: 80%;
+    top: 80%;
+    cursor: pointer;
+    z-index: 99999;
+  }
   main.kv-container {
     max-width: 960px !important;
     font-weight: 400;
     font-size: 1em;
     min-height: 100vh;
+    margin-bottom: 30px;
   }
   main :global(.drawer .panel) {
     transition: transform 1s ease;
@@ -84,7 +141,7 @@
   }
 
   :global(.active-group) {
-    background-color: #9b8fd1;
+    background-color: #9cc87d;
     color: white;
   }
 
@@ -96,7 +153,7 @@
     transition: 0.15s ease all;
   }
   :global(.group-hover) {
-    background-color: #9cc87d;
+    background-color: #9b8fd1;
     color: #fff;
     border-radius: 5px;
   }
@@ -139,5 +196,9 @@
     align-content: center;
     justify-content: center;
     align-items: center;
+  }
+  .groups-wrapper {
+    max-height: 450px;
+    overflow-y: auto;
   }
 </style>
