@@ -14,9 +14,12 @@
   import Drawer from "svelte-drawer-component";
   import ViewFormat from "./Comps/viewformat.svelte";
   import ResizeObserver from "svelte-resize-observer";
+  import DeviceDetector from "svelte-device-detector";
   import Groups from "./Comps/groups.svelte";
+  import ToExcel from "./Comps/toexcel.svelte";
   import Header from "./Comps/header.svelte";
   import Progbar from "./Comps/prgbar.svelte";
+  import ExcelTable from "./Comps/exceltable.svelte";
 
   import Fa from "svelte-fa";
   import { faArrowCircleUp } from "@fortawesome/free-solid-svg-icons";
@@ -83,10 +86,15 @@
       {/if}
 
       <ViewFormat changeformat={ToggleSwitch} />
+
+      <DeviceDetector showInDevice="desktop">
+        <ToExcel />
+      </DeviceDetector>
     </div>
   </Drawer>
   <Progbar />
   <StartMessage openDrawer={TurnDrawer} />
+  <ExcelTable />
 
   {#if $err_sched_data}
     <!-- <div> -->

@@ -1,17 +1,6 @@
 import { readable, writable } from 'svelte/store'
 // https://svelte.dev/repl/b2d671b8119845ca903667f1b3a96e31?version=3.37.0
 
-// //часы для header'a
-// export const time = readable(new Date(), function start(set) {
-// 	const interval = setInterval(() => {
-// 		set(new Date());
-// 	}, 1000);
-
-// 	return function stop() {
-// 		clearInterval(interval);
-// 	};
-// });
-
 
 export const load_ini_data= writable(false) //индикатор загрузки ини-данных
 export const ini_data = writable({}) // ини-данные
@@ -19,7 +8,7 @@ export const curr_year_id =writable(0) //текущий учебный год
 export const curr_month = writable(0) //тек-й мес.
 export const err_ini_data= writable(false) //сообщение об ошибке при загр. ини-данных
 
-
+export const selected_GSName = writable("")
 export const load_sched_data= writable(false)
 export const err_sched_data= writable(false)
 export const  scheddata=writable({})
