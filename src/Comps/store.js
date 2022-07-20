@@ -1,6 +1,9 @@
 import { readable, writable } from 'svelte/store'
 // https://svelte.dev/repl/b2d671b8119845ca903667f1b3a96e31?version=3.37.0
 
+export const d_start = writable(null) //начало-конец периода для показа в Noschedule
+export const d_end = writable(null)
+
 
 export const load_ini_data= writable(false) //индикатор загрузки ини-данных
 export const ini_data = writable({}) // ини-данные
@@ -17,11 +20,7 @@ export const sched_data_loaded=writable(false) //была  загрузка ра
 export const client_width = writable(0) //ширина экрана от ResizeObserver
 
 const esc = encodeURIComponent;
-// const buildparams =(pars)=>{
-//      Object.keys(pars)
-//     .map((k) => `${esc(k)}=${esc(pars[k])}`)
-//     .join("&");
-// }
+
 //загрузка исходных данных: форма - курс - группа
 // export default function (){
 export default  function (){
@@ -109,7 +108,7 @@ export async function getSched(grp_id,year_id,month_num){
         sched_data_loaded.set(true)
 
 
-        //Позиционируем на сегодня, если есть в расписании
+        //!!!!! не ЗАБЫТЬ!!!Позиционируем на сегодня, если есть в расписании
         //tmp setTimeout(() => {
         //     let dp = document.getElementById(
         //         new Date().toISOString().slice(0, 10)

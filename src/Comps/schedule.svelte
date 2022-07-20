@@ -1,7 +1,7 @@
 <script>
-    import { scheddata } from "./store";
+    import { scheddata, sched_data_loaded } from "./store";
+    import Noschedule from "./noschedule.svelte";
     import { isToday, toEnDate } from "./utils";
-    console.log("data", $scheddata);
 </script>
 
 <div>
@@ -49,6 +49,8 @@
                 </div>
             {/each}
         {/each}
+    {:else if $sched_data_loaded}
+        <Noschedule />
     {/if}
 </div>
 
