@@ -90,7 +90,9 @@
                             <div
                                 title={PairItem(day.mainSchedule, time)
                                     .TimeStart +
-                                    ": " +
+                                    " - " +
+                                    n_pair +
+                                    " пара: " +
                                     PairItem(day.mainSchedule, time).SubjSN}
                                 class="pair-detail"
                             >

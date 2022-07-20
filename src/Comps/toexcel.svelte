@@ -4,8 +4,8 @@
     import Fa from "svelte-fa";
     import { faFileExcel } from "@fortawesome/free-solid-svg-icons";
 
-    // let script;
-    // let url = "/tableToExcel.js";
+    let script;
+    let url = "/tableToExcel.js";
 
     const saveFile = () => {
         TableToExcel.convert(document.querySelector("#schtable"), {
@@ -15,9 +15,10 @@
     };
 </script>
 
-<!-- <svelte:head>
+<svelte:head>
     <script bind:this={script} src={url}></script>
-</svelte:head> -->
+</svelte:head>
+
 <!-- ////disabled={Object.keys($scheddata).length > 0 ? false : true} -->
 <button
     on:click={saveFile}
