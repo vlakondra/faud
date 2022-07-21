@@ -2,6 +2,8 @@
     const _expState = {};
 </script> -->
 <script>
+    // @ts-nocheck
+
     //https://andybeckmann.com/blog/animating-height-with-javascript
     import Item from "./group.svelte";
 
@@ -28,7 +30,7 @@
             is_closed = true;
             return;
         }
-        let uls = document.getElementsByClassName("gsnodes"); //query!!
+        let uls = document.querySelectorAll(".gsnodes"); //document.getElementsByClassName("gsnodes"); //query!!
 
         for (let ul of uls) {
             if (ul.classList.contains("open")) {

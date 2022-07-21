@@ -1,4 +1,6 @@
 <script lang="javascript">
+  // @ts-nocheck
+
   import { setContext } from "svelte";
   import { fade } from "svelte/transition";
   import { client_width, ini_data, err_sched_data } from "./Comps/store";
@@ -157,6 +159,7 @@
     //margin-left: 0px;
     opacity: 1;
     font-size: 1em;
+    max-height: 900px;
     overflow: hidden;
     transition: 0.15s ease all;
   }
@@ -167,13 +170,12 @@
   }
 
   :global(.gsnodes.hide) {
-    //display:none;
-    //margin-left: -100px;
     opacity: 0;
     font-size: 0em;
     overflow: hidden;
-    max-height: 0px;
-    transition: 0.25s ease all;
+    max-height: 0em;
+
+    transition: 0.125s ease all;
   }
 
   :global(.minus)::before {

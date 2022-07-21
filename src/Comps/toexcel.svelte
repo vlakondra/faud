@@ -8,6 +8,7 @@
     let url = "/tableToExcel.js";
 
     const saveFile = () => {
+        // @ts-ignore
         TableToExcel.convert(document.querySelector("#schtable"), {
             name: $selected_GSName + ".xlsx",
             sheet: { name: "Расписание " },

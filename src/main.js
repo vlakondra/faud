@@ -10,9 +10,7 @@ const app=new App( {
 
     // target: document.getElementById('app')
     target: document.querySelector('section div'),
-    props: {
-      prp:"qwerty"
-    }
+
   }
 
 )
