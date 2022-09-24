@@ -96,6 +96,7 @@
   </Drawer>
   <Progbar />
   <StartMessage openDrawer={TurnDrawer} />
+
   <ExcelTable />
 
   {#if $err_sched_data}
@@ -113,6 +114,20 @@
   // :global(body) {
   //   background-image: url("/bg.jpg"); -> см. minireset.sass
   // }
+  :global(.month) {
+    cursor: pointer;
+    padding: 5px 7px;
+    background-color: #e67f7f;
+    color: #eef9f9;
+    border-bottom: 1px solid rgb(195, 195, 251);
+    font-style: oblique;
+    letter-spacing: 2px;
+    font-size: 1.1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+  }
 
   .totop-box {
     position: fixed;

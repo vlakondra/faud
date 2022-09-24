@@ -24,7 +24,8 @@ const esc = encodeURIComponent;
 //загрузка исходных данных: форма - курс - группа
 // export default function (){
 export default  function (){
-    const url = "https://old.ursei.su/Services/GetGSSchedIniData"; 
+    const url = "https://old.ursei.su/Services/GetGSSchedIniData";
+    const url_api= "https://api.ursei.su/public/schedule/rest/GetGSSchedIniData";
 
     //const loading = writable(true) //оставить только data и export-переменные
     const error = writable(false)
@@ -32,33 +33,38 @@ export default  function (){
    
     async function get() {
         load_ini_data.set(true)
-        let year_id;
+        // let year_id;
         const cd = new Date()
         const currMonth = cd.getMonth()+1
+
         try {
-            const response = await fetch(url,{},3000)
+            //old const response = await fetch(url,{},3000)
+            const response = await fetch(url_api,{},3000)
             const js = await response.json();
+
             if (js.hasOwnProperty('Error')){
                // обраб. ошибку остановки БД для архивации в 01.00
                 throw js.Error
             }
             else{
-              const years = js.YearList
+              // old const years = js.YearList
               //если тек. мес. < 8, то тек уч. год. => "тек.год -1 / тек.год"
               //если >= 8 =h> "тек.год / тек.год + 1"
-              if(currMonth < 8){
-                 year_id = years.filter(y => y.EduYear.endsWith(cd.getFullYear()))[0]['Year_ID'];
-               }else if(currMonth >= 8){
-                 year_id = years.filter(y => y.EduYear.startsWith(cd.getFullYear()))[0]['Year_ID'];  
-               }
+
+              // if(currMonth < 8){
+              //    year_id = years.filter(y => y.EduYear.endsWith(cd.getFullYear()))[0]['Year_ID'];
+              //  }else if(currMonth >= 8){
+              //    year_id = years.filter(y => y.EduYear.startsWith(cd.getFullYear()))[0]['Year_ID'];  
+              //  }
               
-              const gstree= js.GSTree.filter(y => y.Year_ID===year_id)[0] 
+              // old const gstree= js.GSTree.filter(y => y.Year_ID===year_id)[0] 
 
               //текущие уч.год и месяц (будут нужны при запросе расписанияы)
-              curr_year_id.set(year_id)
+              // old curr_year_id.set(year_id)
               curr_month.set(currMonth)
               
-                ini_data.set(await gstree.FormEdu) //Группы за определенный уч.год
+                //old ini_data.set(await gstree.FormEdu) //Группы за определенный уч.год
+                ini_data.set(await js.FormEdu)
               }
             
             // data.set(await gstree.FormEdu);// response.json())
@@ -73,9 +79,9 @@ export default  function (){
    // return [error, data];
 }
 
-export async function getSched(grp_id,year_id,month_num){
+export async function getSched(grp_id) { // ,year_id,month_num){
 
-    console.log("Query - ",grp_id,year_id,month_num)
+    console.log("Query - ",grp_id)//,year_id,month_num)
    // let dstart,dend,departid,empid;
 
     // d_start.subscribe((v)=>dstart=new Date(v).toLocaleDateString('ru-RU'))
@@ -84,26 +90,30 @@ export async function getSched(grp_id,year_id,month_num){
     // teacher_id.subscribe((v)=>empid=v)
 
     load_sched_data.set(true)
-    const url='https://old.ursei.su/Services/GetGsSched?'
+    //old const url='https://old.ursei.su/Services/GetGsSched?'
+    const url_api= "https://api.ursei.su/public/schedule/rest/GetGsSched?";//grpid=26191
+
 
     ////grpid=26015&yearid=26&monthnum=8
 
     const params = {
-        grpid:26015,//grp_id,
-        yearid:26,//  year_id,
-        monthnum:8//month_num
+        grpid:grp_id
+        // yearid:26,//  year_id,
+        // monthnum:8//month_num
       };
       const query = Object.keys(params)
       .map((k) => `${esc(k)}=${esc(params[k])}`)
       .join("&");
 
-      console.log(url+query)
+      console.log(url_api+query)
       try {
         let x;
-        const response = await fetch(url + query)
+        const response = await fetch(url_api + query)
         // console.log('JSON', response.json())
         // x= await response.json()
-        // console.log(x)
+        // console.log('sched',x)
+        // return
+
         scheddata.set(await response.json())  
         sched_data_loaded.set(true)
 

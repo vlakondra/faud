@@ -82,9 +82,9 @@
     }
     .switch-wrapper {
         display: flex;
-        justify-content: space-evenly;
+        justify-content: space-around;
         align-items: center;
-        width: 90%;
+        width: 100%;
     }
     .switch-caption {
         width: 90%;

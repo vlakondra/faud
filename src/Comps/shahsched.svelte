@@ -12,7 +12,7 @@
         //считает кол-во пар в мес.
         let pcount = 0;
         daysArr.forEach((day) => {
-            pcount += day["Schedule"].length;
+            pcount += day["mainSchedule"].length;
         });
         return pcount;
     };
@@ -26,102 +26,109 @@
 
 {#if Object.keys($scheddata).length}
     <div class="pair-wrapper">
-        <!-- {#each $scheddata as month, m} -->
-        <!-- <div
+        {#each $scheddata.Month as month, m}
+            <div
                 on:click={() => (shows[m] = !shows[m])}
                 style="grid-column: 1 / 10;"
                 class="month"
             >
-                <span> {month.Month}</span>
+                <span> {month.Name}</span>
                 <span
-                    >Всего пар: {PairCount(month.DateDay)}; дней: {month.DateDay
+                    >Всего пар: {PairCount(month.Sched)}; дней: {month.Sched
                         .length}</span
                 >
-            </div> -->
+            </div>
 
-        {#if shows[0]}
-            <div style="grid-column: 1 / 2}; " class="timepairs" />
+            {#if shows[m]}
+                <div style="grid-column: 1 / 2}; " class="timepairs" />
 
-            {#each Object.entries(timepairs) as [n_pair, time], n}
-                <div
-                    style="grid-column: {parseInt(n_pair) + 1} / {parseInt(
-                        n_pair
-                    ) + 2};"
-                    class="timepairs"
-                >
-                    {time}
-                </div>
-            {/each}
-
-            {#each $scheddata.Sched as day, d}
-                <div
-                    id={toEnDate(day.datePair)}
-                    style="grid-column: {startCol} / {startCol + 1};"
-                    in:fade={{ duration: 500 }}
-                    out:fade
-                    class="first-ceil {day.dayWeek == 'Суббота'
-                        ? 'sbt'
-                        : 'date-pair'}   {isToday(day.datePair) ? 'today' : ''}"
-                >
-                    {#if isToday(day.datePair)}
-                        <div class="today-lbl">Сегодня</div>
-                    {/if}
-
-                    <div>
-                        {day.datePair}
-                    </div>
-                    <div>
-                        {day.dayWeek}
-                    </div>
-                </div>
-
-                {#each Object.entries(timepairs) as [n_pair, time]}
+                {#each Object.entries(timepairs) as [n_pair, time], n}
                     <div
                         style="grid-column: {parseInt(n_pair) + 1} / {parseInt(
                             n_pair
-                        ) + 2}"
-                        in:fade={{ duration: 1000 }}
-                        out:fade
-                        class="pair-ceil"
+                        ) + 2};"
+                        class="timepairs"
                     >
-                        {#if day.mainSchedule.findIndex((el) => el.TimeStart == time) == -1}
-                            {""}
-                        {:else}
-                            <div
-                                title={PairItem(day.mainSchedule, time)
-                                    .TimeStart +
-                                    " - " +
-                                    n_pair +
-                                    " пара: " +
-                                    PairItem(day.mainSchedule, time).SubjSN}
-                                class="pair-detail"
-                            >
-                                <div class="subj">
-                                    {PairItem(day.mainSchedule, time).SubjSN}
-                                </div>
-                                <div class="aud-fio-wrapp">
-                                    <div class="aud-wrapper">
-                                        <div class="aud">
-                                            {PairItem(day.mainSchedule, time)
-                                                .Aud}
-                                        </div>
-                                        <div class="kind-load">
-                                            {PairItem(day.mainSchedule, time)
-                                                .LoadKindSN}
-                                        </div>
-                                    </div>
-
-                                    <div class="groups">
-                                        {PairItem(day.mainSchedule, time).FIO}
-                                    </div>
-                                </div>
-                            </div>
-                        {/if}
+                        {time}
                     </div>
                 {/each}
-            {/each}
-        {/if}
-        <!-- {/each} -->
+
+                {#each month.Sched as day, d}
+                    <div
+                        id={toEnDate(day.datePair)}
+                        style="grid-column: {startCol} / {startCol + 1};"
+                        in:fade={{ duration: 500 }}
+                        out:fade
+                        class="first-ceil {day.dayWeek == 'Суббота'
+                            ? 'sbt'
+                            : 'date-pair'}   {isToday(day.datePair)
+                            ? 'today'
+                            : ''}"
+                    >
+                        {#if isToday(day.datePair)}
+                            <div class="today-lbl">Сегодня</div>
+                        {/if}
+
+                        <div>
+                            {day.datePair}
+                        </div>
+                        <div>
+                            {day.dayWeek}
+                        </div>
+                    </div>
+
+                    {#each Object.entries(timepairs) as [n_pair, time]}
+                        <div
+                            style="grid-column: {parseInt(n_pair) +
+                                1} / {parseInt(n_pair) + 2}"
+                            in:fade={{ duration: 1000 }}
+                            out:fade
+                            class="pair-ceil"
+                        >
+                            {#if day.mainSchedule.findIndex((el) => el.TimeStart == time) == -1}
+                                {""}
+                            {:else}
+                                <div
+                                    title={PairItem(day.mainSchedule, time)
+                                        .TimeStart +
+                                        " - " +
+                                        n_pair +
+                                        " пара: " +
+                                        PairItem(day.mainSchedule, time).SubjSN}
+                                    class="pair-detail"
+                                >
+                                    <div class="subj">
+                                        {PairItem(day.mainSchedule, time)
+                                            .SubjSN}
+                                    </div>
+                                    <div class="aud-fio-wrapp">
+                                        <div class="aud-wrapper">
+                                            <div class="aud">
+                                                {PairItem(
+                                                    day.mainSchedule,
+                                                    time
+                                                ).Aud}
+                                            </div>
+                                            <div class="kind-load">
+                                                {PairItem(
+                                                    day.mainSchedule,
+                                                    time
+                                                ).LoadKindSN}
+                                            </div>
+                                        </div>
+
+                                        <div class="groups">
+                                            {PairItem(day.mainSchedule, time)
+                                                .FIO}
+                                        </div>
+                                    </div>
+                                </div>
+                            {/if}
+                        </div>
+                    {/each}
+                {/each}
+            {/if}
+        {/each}
     </div>
 {:else if $sched_data_loaded}
     <Noschedule />
@@ -135,7 +142,6 @@
     }
     .today {
         font-size: 1.15em;
-        /* color: blue; */
         background-color: #97cfd0 !important;
     }
     .today-lbl {

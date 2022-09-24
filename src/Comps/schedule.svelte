@@ -2,53 +2,92 @@
     import { scheddata, sched_data_loaded } from "./store";
     import Noschedule from "./noschedule.svelte";
     import { isToday, toEnDate } from "./utils";
+    import { fade } from "svelte/transition";
+
+    const PairCount = (daysArr) => {
+        //считает кол-во пар в мес.
+        let pcount = 0;
+        daysArr.forEach((day) => {
+            pcount += day["mainSchedule"].length;
+        });
+        return pcount;
+    };
+    let shows = [true, true];
+    // if ($scheddata) {
+    //     shows = Array($scheddata.Month.length).fill(true);
+    // }
 </script>
 
 <div>
+    <!-- лишний <div> ?? -->
+    <!-- on:click={() => (shows[i] = !shows[i])} -->
+
     {#if Object.keys($scheddata).length}
-        {#each $scheddata.Sched as day, i}
-            <div
-                id={toEnDate(day.datePair)}
-                class="day {day.dayWeek == 'Суббота' ? 'sbt' : ''}  {isToday(
-                    day.datePair
-                )
-                    ? 'today'
-                    : ''}"
-            >
-                <span>
-                    {day.datePair}
-                    <span style="margin-left:10px;"> {day.dayWeek}</span>
-                </span>
-
-                {#if isToday(day.DatePair)}
-                    <span class="today-lbl">Сегодня</span>
-                {/if}
-            </div>
-
-            {#each day.mainSchedule as pair, i}
-                <div class="pair-wrapper">
-                    <div class="time-start">
-                        {pair.TimeStart}
-                    </div>
-                    <div class="subj-name">
-                        <span> {pair.SubjSN} </span>
-                    </div>
-                    <div class="kind">
-                        <span>
-                            {pair.LoadKindSN}
-                        </span>
-                    </div>
-                    <div class="kv-group">
-                        <span>
-                            {pair.FIO}
-                        </span>
-                    </div>
-                    <div class="aud">
-                        {pair.Aud}
-                    </div>
+        <div style="margin-top:10px;">
+            {#each $scheddata.Month as month, i}
+                <div
+                    id={i + "-month"}
+                    on:click={() => (shows[i] = !shows[i])}
+                    class="month"
+                >
+                    <span> {month.Name}</span>
+                    <span>
+                        Всего пар: {PairCount(month.Sched)}; дней: {month.Sched
+                            .length}
+                    </span>
                 </div>
+
+                {#if shows[i]}
+                    <div in:fade={{ duration: 1000 }} out:fade>
+                        {#each month.Sched as day, i}
+                            <div
+                                id={toEnDate(day.datePair)}
+                                class="day {day.dayWeek == 'Суббота'
+                                    ? 'sbt'
+                                    : ''}  {isToday(day.datePair)
+                                    ? 'today'
+                                    : ''}"
+                            >
+                                <span>
+                                    {day.datePair}
+                                    <span style="margin-left:10px;">
+                                        {day.dayWeek}</span
+                                    >
+                                </span>
+
+                                {#if isToday(day.DatePair)}
+                                    <span class="today-lbl">Сегодня</span>
+                                {/if}
+                            </div>
+
+                            {#each day.mainSchedule as pair, i}
+                                <div class="pair-wrapper">
+                                    <div class="time-start">
+                                        {pair.TimeStart}
+                                    </div>
+                                    <div class="subj-name">
+                                        <span> {pair.SubjSN} </span>
+                                    </div>
+                                    <div class="kind">
+                                        <span>
+                                            {pair.LoadKindSN}
+                                        </span>
+                                    </div>
+                                    <div class="kv-group">
+                                        <span>
+                                            {pair.FIO}
+                                        </span>
+                                    </div>
+                                    <div class="aud">
+                                        {pair.Aud}
+                                    </div>
+                                </div>
+                            {/each}
+                        {/each}
+                    </div>
+                {/if}
             {/each}
-        {/each}
+        </div>
     {:else if $sched_data_loaded}
         <Noschedule />
     {/if}

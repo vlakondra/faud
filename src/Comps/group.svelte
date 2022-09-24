@@ -27,15 +27,15 @@
         li_group.classList.add("active-group");
 
         //получаем расписание
-        console.log(
-            "query-1 ",
-            item.GSName,
-            item.GS_ID,
-            $curr_year_id,
-            $curr_month
-        );
+        // console.log(
+        //     "query-1 ",
+        //     item.GSName,
+        //     item.GS_ID,
+        //     $curr_year_id,
+        //     $curr_month
+        // );
         selected_GSName.update(() => item.GSName);
-        getSched(item.GS_ID, $curr_year_id, $curr_month);
+        getSched(26193); //!!!   //item.GS_ID); //, $curr_year_id, $curr_month);
 
         //гасим drawer
         setTimeout(() => {
