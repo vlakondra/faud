@@ -32,7 +32,7 @@
                 >
                     <span> {month.Name}</span>
                     <span>
-                        Всего пар: {PairCount(month.Sched)}; дней: {month.Sched
+                        Пар: {PairCount(month.Sched)}; дней: {month.Sched
                             .length}
                     </span>
                 </div>
