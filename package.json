@@ -17,6 +17,7 @@
     "vite": "^2.9.13"
   },
   "dependencies": {
+    "@fontsource/montserrat": "^4.5.12",
     "@fontsource/roboto": "^4.5.7",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@linways/table-to-excel": "^1.0.4",

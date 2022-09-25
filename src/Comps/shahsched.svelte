@@ -197,7 +197,8 @@
         font-weight: 400;
     }
     .subj {
-        font-family: "Roboto";
+        /* font-family: "Roboto"; */
+        font-family: "Montserrat";
         font-weight: normal;
         color: rgb(5 19 19);
         font-size: 0.85em;
@@ -224,7 +225,7 @@
         font-size: 0.75em;
         border-radius: 0.4em;
         word-break: break-all;
-        padding: 0 5px;
+        padding: 0 3px;
         min-height: 37px;
         display: flex;
         flex-direction: column;

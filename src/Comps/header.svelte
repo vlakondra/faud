@@ -4,13 +4,19 @@
     export let onBurgerClick;
 
     import Fa from "svelte-fa";
+
     import { faBars } from "@fortawesome/free-solid-svg-icons";
 
     let time = new Date();
+
     onMount(() => {
-        let intr = setInterval(() => {
-            time = new Date();
-        }, 1000);
+        let intr = setInterval(
+            () => {
+                time = new Date();
+            },
+
+            1000
+        );
         return () => clearInterval(intr);
     });
 
@@ -26,9 +32,7 @@
 </script>
 
 <div id="header" class="header">
-    <div class="date">
-        {new Date().toLocaleDateString("ru-RU")}
-    </div>
+    <div class="date">{new Date().toLocaleDateString("ru-RU")}</div>
     <div class="caption-wrapp">
         <div class="kv-burger" on:click={onBurgerClick}>
             <Fa icon={faBars} />
@@ -53,6 +57,7 @@
         box-shadow: 1px 2px 6px 0px #5a3c3c;
         border-radius: 5px;
     }
+
     .date,
     .time {
         font-size: 1.15em;
@@ -62,12 +67,17 @@
         letter-spacing: 0.5px;
     }
 
+    .time {
+        width: 65px;
+    }
+
     .kv-burger {
         width: 50px;
         text-align: center;
         color: #fff;
         cursor: pointer;
     }
+
     .caption {
         text-align: left;
         text-shadow: 1px 1px 1px rgb(75 50 31);
@@ -76,16 +86,19 @@
         line-height: 1em;
         font-weight: 400;
     }
+
     .caption-wrapp {
         display: flex;
         flex-wrap: nowrap;
         align-items: center;
     }
+
     // Перепроверить на мобильнике
     @media (min-width: 500px) {
         .kv-burger {
             font-size: 2em;
         }
+
         .caption {
             font-size: 1.75em;
         }
@@ -96,10 +109,12 @@
             padding: 5px 5px;
             margin: 3px 0 0px 0;
         }
+
         .caption {
-            font-size: 5vw;
+            font-size: 4.5vw;
             letter-spacing: 0px;
         }
+
         .kv-burger {
             font-size: 1.75em;
         }
