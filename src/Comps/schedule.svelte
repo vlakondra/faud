@@ -66,7 +66,7 @@
                                         {pair.TimeStart}
                                     </div>
                                     <div class="subj-name">
-                                        <span> {pair.SubjSN} </span>
+                                        <span> {pair.SubjName} </span>
                                     </div>
                                     <div class="kind">
                                         <span>
