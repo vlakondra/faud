@@ -94,6 +94,9 @@
 </div>
 
 <style>
+    .month:nth-child(odd) {
+        margin-top: 3px;
+    }
     .sbt {
         color: rgb(234, 249, 252) !important;
     }

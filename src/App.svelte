@@ -114,6 +114,7 @@
   // :global(body) {
   //   background-image: url("/bg.jpg"); -> см. minireset.sass
   // }
+
   :global(.month) {
     cursor: pointer;
     padding: 5px 7px;
