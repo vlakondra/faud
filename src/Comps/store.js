@@ -81,7 +81,6 @@ export default  function (){
 
 export async function getSched(grp_id) { // ,year_id,month_num){
 
-    console.log("Query - ",grp_id)//,year_id,month_num)
    // let dstart,dend,departid,empid;
 
     // d_start.subscribe((v)=>dstart=new Date(v).toLocaleDateString('ru-RU'))
@@ -94,8 +93,6 @@ export async function getSched(grp_id) { // ,year_id,month_num){
     const url_api= "https://api.ursei.su/public/schedule/rest/GetGsSched?";//grpid=26191
 
 
-    ////grpid=26015&yearid=26&monthnum=8
-
     const params = {
         grpid:grp_id
         // yearid:26,//  year_id,
@@ -105,30 +102,28 @@ export async function getSched(grp_id) { // ,year_id,month_num){
       .map((k) => `${esc(k)}=${esc(params[k])}`)
       .join("&");
 
-      console.log(url_api+query)
       try {
         let x;
         const response = await fetch(url_api + query)
         // console.log('JSON', response.json())
         // x= await response.json()
         // console.log('sched',x)
-        // return
 
         scheddata.set(await response.json())  
         sched_data_loaded.set(true)
 
 
         //!!!!! не ЗАБЫТЬ!!!Позиционируем на сегодня, если есть в расписании
-        //tmp setTimeout(() => {
-        //     let dp = document.getElementById(
-        //         new Date().toISOString().slice(0, 10)
-        //     );
-        //     if (dp) {
-        //         dp.scrollIntoView({ block: "start", behavior: "smooth" });
-        //     }else {
-        //         document.body.scrollIntoView();
-        //     }
-        // }, 500);
+        setTimeout(() => {
+            let dp = document.getElementById(
+                new Date().toISOString().slice(0, 10)
+            );
+            if (dp) {
+                dp.scrollIntoView({ block: "start", behavior: "smooth" });
+            }else {
+                document.body.scrollIntoView();
+            }
+        }, 500);
      
     } catch(e) {
         sched_data_loaded.set(true)

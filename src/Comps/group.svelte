@@ -35,7 +35,8 @@
         //     $curr_month
         // );
         selected_GSName.update(() => item.GSName);
-        getSched(26193); //!!!   //item.GS_ID); //, $curr_year_id, $curr_month);
+        // getSched(26193); //!!!   //item.GS_ID); //, $curr_year_id, $curr_month);
+        getSched(item.GS_ID);
 
         //гасим drawer
         setTimeout(() => {
