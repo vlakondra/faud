@@ -23,7 +23,7 @@
     <!-- on:click={() => (shows[i] = !shows[i])} -->
 
     {#if Object.keys($scheddata).length}
-        <div style="margin-top:10px;">
+        <div style="margin-top:7px;">
             {#each $scheddata.Month as month, i}
                 <div
                     id={i + "-month"}
