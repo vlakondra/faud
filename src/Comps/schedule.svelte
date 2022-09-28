@@ -55,7 +55,7 @@
                                     >
                                 </span>
 
-                                {#if isToday(day.DatePair)}
+                                {#if isToday(day.datePair) == true}
                                     <span class="today-lbl">Сегодня</span>
                                 {/if}
                             </div>

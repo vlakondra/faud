@@ -195,7 +195,7 @@
   }
 
   :global(.minus)::before {
-    content: "-";
+    content: "\2212";
     width: 15px;
     height: 15px;
     background-color: #b2b2e7;

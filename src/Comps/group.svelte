@@ -60,6 +60,8 @@
     on:click={onClick}
     on:mouseover={onMouseOver}
     on:mouseout={onMouseOut}
+    on:blur={null}
+    on:focus={null}
 >
     {item.GSName}
 </span>
@@ -71,6 +73,7 @@
         margin-left: -9px;
         font-size: 0.9em;
         border-radius: 7px;
+        cursor: pointer;
     }
 
     /*
