@@ -16,11 +16,11 @@ export default defineConfig({
   plugins: [svelte( {
     configFile: 'svelte.config.js'
   })],
-  server:{
-    port:3000,
-    open:'/index.html',
-    app:process.env.BROWSER
-  },
+  // server:{
+  //   port:3000,
+  //   open:'/index.html',
+  //   app:process.env.BROWSER
+  // },
 
   // build: {
   //   rollupOptions: {
