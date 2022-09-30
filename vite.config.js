@@ -5,7 +5,7 @@ import { svelte } from '@sveltejs/vite-plugin-svelte'
 
 
 // process.env['MY_TEST'] = 'mytest!!';
-process.env.BROWSER = 'firefox';
+// process.env.BROWSER = 'firefox';
 //import 'dotenv';//).config();
 
 // const env = loadEnv( process.cwd(), '')
