@@ -7,8 +7,8 @@ tasks:
       npm run dev
 ports:
   - port: 3000
-    # onOpen: ignore
-    onOpen: open-preview
+    onOpen: ignore
+    # onOpen: open-preview
   - port: 35729
     onOpen: ignore
 vscode:
