@@ -1,7 +1,8 @@
 tasks:
   - init: npm install
     command: |
-      export CLIENT_URL="$(gp url 35729)/livereload.js?snipver=1&port=443"
+      # export CLIENT_URL="$(gp url 35729)/livereload.js?snipver=1&port=443"
+      export CLIENT_URL="$(gp url 24678 )/livereload.js?snipver=1&port=443"
       # //{ gp await-port 3000 && sleep 5 && gp preview $(gp url 3000) & } &> /dev/null
       # //gp open src/App.svelte
       npm run dev
@@ -9,7 +10,8 @@ ports:
   - port: 3000
     onOpen: ignore
     # onOpen: open-preview
-  - port: 35729
+    # - port: 35729
+  - port: 24678 
     onOpen: ignore
 vscode:
   extensions:
