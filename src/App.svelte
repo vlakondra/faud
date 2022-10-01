@@ -5,9 +5,6 @@
   import { fade } from "svelte/transition";
   import { client_width, ini_data, err_sched_data } from "./Comps/store";
 
-  // import viteLogo from "/vite.svg";
-  // import svelteLogo from "./assets/svelte.svg";
-
   import Schedule from "./Comps/schedule.svelte";
   import ShahSched from "./Comps/shahsched.svelte";
   import Errschedule from "./Comps/errschedule.svelte";
@@ -71,7 +68,6 @@
       <Fa icon={faArrowCircleUp} color="#6565ed" size="2.5x" />
     </div>
   {/if}
-
   <Header onBurgerClick={TurnDrawer} />
   <Drawer
     open={openDrawer}
@@ -119,6 +115,7 @@
     cursor: pointer;
     padding: 5px 7px;
     background-color: #e67f7f;
+    // background-color: #45a6d6;
     color: #eef9f9;
     border-bottom: 1px solid rgb(195, 195, 251);
     font-style: oblique;
