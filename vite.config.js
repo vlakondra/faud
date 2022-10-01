@@ -1,7 +1,24 @@
 import { defineConfig } from 'vite'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
-// import Roll from './rollup.config.js'
-//import autoPreprocess from 'svelte-preprocess'
+
+// from  https://github.com/stroblp/svelte-persistent-store
+export default defineConfig({
+  plugins: [svelte()],
+  server: {
+    // configure vite for HMR with Gitpod
+    hmr: process.env.GITPOD_WORKSPACE_URL
+      ? {
+        // removes the protocol and replaces it with the port we're connecting to
+        host: process.env.GITPOD_WORKSPACE_URL.replace('https://', '3000-'),
+        protocol: 'wss',
+        clientPort: 443
+      }
+      : true
+  },
+  base:"/ssched/"
+})
+
+
 
 
 // process.env['MY_TEST'] = 'mytest!!';
@@ -12,10 +29,10 @@ import { svelte } from '@sveltejs/vite-plugin-svelte'
 // console.log('env',process.env,import.meta.env)
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [svelte( {
-    configFile: 'svelte.config.js'
-  })],
+// export default defineConfig({
+//   plugins: [svelte( {
+//     configFile: 'svelte.config.js'
+//   })],
   // server:{
   //   port:3000,
   //   open:'/index.html',
@@ -45,4 +62,4 @@ export default defineConfig({
   //   },
   // },
 
-})
+// })
