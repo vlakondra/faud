@@ -19,9 +19,6 @@
 </script>
 
 <div>
-    <!-- лишний <div> ?? -->
-    <!-- on:click={() => (shows[i] = !shows[i])} -->
-
     {#if Object.keys($scheddata).length}
         <div style="margin-top:7px;">
             {#each $scheddata.Month as month, i}
@@ -155,8 +152,6 @@
         .time-start {
             grid-column: 1 / 2;
             grid-row: 1 / 4;
-            /* text-align: center;
-            padding-top: 5px; */
 
             display: inline-flex;
             justify-content: center;
@@ -176,8 +171,6 @@
         .aud {
             grid-column: 3 / 4;
             grid-row: 1 / 3;
-            /* text-align: center;
-            padding-top: 5px; */
 
             display: inline-flex;
             justify-content: center;
@@ -193,6 +186,7 @@
             font-weight: 600;
             background-color: #dddfff;
             color: #7e7575;
+            padding:4px;
         }
         .kv-group {
             grid-column: 2 / 3;
@@ -203,6 +197,7 @@
             font-size: 70%;
             font-weight: 600;
             color: #7e7575;
+            padding-top: 5px;
         }
     }
 </style>
