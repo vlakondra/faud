@@ -5,8 +5,11 @@
   import { fade } from "svelte/transition";
   import { client_width, ini_data, err_sched_data } from "./Comps/store";
 
-  import Schedule from "./Comps/schedule.svelte";
-  import ShahSched from "./Comps/shahsched.svelte";
+  import Period from "./Comps/period.svelte";
+  import Pairs from "./Comps/pairs.svelte";
+
+  // import Schedule from "./Comps/schedule.svelte";
+  // import ShahSched from "./Comps/shahsched.svelte";
   import Errschedule from "./Comps/errschedule.svelte";
 
   import StartMessage from "./Comps/startmessage.svelte";
@@ -15,10 +18,10 @@
   import ResizeObserver from "svelte-resize-observer";
   import DeviceDetector from "svelte-device-detector";
   import Groups from "./Comps/groups.svelte";
-  import ToExcel from "./Comps/toexcel.svelte";
+  // import ToExcel from "./Comps/toexcel.svelte";
   import Header from "./Comps/header.svelte";
   import Progbar from "./Comps/prgbar.svelte";
-  import ExcelTable from "./Comps/exceltable.svelte";
+  // import ExcelTable from "./Comps/exceltable.svelte";
 
   import Fa from "svelte-fa";
   import { faArrowCircleUp } from "@fortawesome/free-solid-svg-icons";
@@ -52,10 +55,10 @@
 <svelte:window bind:scrollY={scrolly} />
 
 <svelte:head>
-  <title>Расписание групп</title>
+  <title>Свободные аудитории</title>
 </svelte:head>
 
-<main class="kv-container ">
+<main class="kv-container">
   <ResizeObserver
     on:resize={(e) => {
       w = e.detail.clientWidth;
@@ -76,33 +79,36 @@
   >
     <div class="notification">
       <button on:click={() => (openDrawer = false)} class="delete is-medium" />
-
-      {#if $ini_data.length}
-        <div class="groups-wrapper" style="">
-          <Groups name="Выберите группу" nodes={$ini_data} />
+      {JSON.stringify($ini_data)}
+      {#if $ini_data.keys.length}
+        <div class="groups-wrapper">
+          <Period />
+        </div>
+        <div>
+          <Pairs />
         </div>
       {/if}
 
-      <ViewFormat changeformat={ToggleSwitch} />
-
       <DeviceDetector showInDevice="desktop">
-        <ToExcel />
+        <!-- <ToExcel /> -->
       </DeviceDetector>
     </div>
   </Drawer>
   <Progbar />
   <StartMessage openDrawer={TurnDrawer} />
 
-  <ExcelTable />
+  <!-- <ExcelTable /> -->
 
   {#if $err_sched_data}
     <!-- <div> -->
     <Errschedule errmessage={$err_sched_data} />
     <!-- </div> -->
   {:else if showtable}
-    <Schedule />
+    <!-- <Schedule /> -->
+    0000
   {:else}
-    <ShahSched />
+    1111
+    <!-- <ShahSched /> -->
   {/if}
 </main>
 

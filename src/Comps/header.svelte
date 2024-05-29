@@ -15,7 +15,7 @@
                 time = new Date();
             },
 
-            1000
+            1000,
         );
         return () => clearInterval(intr);
     });
@@ -34,10 +34,14 @@
 <div id="header" class="header">
     <div class="date">{new Date().toLocaleDateString("ru-RU")}</div>
     <div class="caption-wrapp">
-        <div class="kv-burger" on:click={onBurgerClick}>
+        <div
+            class="kv-burger"
+            on:mouseenter={onBurgerClick}
+            on:click={onBurgerClick}
+        >
             <Fa icon={faBars} />
         </div>
-        <div class="caption">Расписание студенческих групп</div>
+        <div class="caption">Свободные аудитории</div>
     </div>
     <div class="time">{formatter.format(time)}</div>
 </div>

@@ -36,7 +36,7 @@
             </div>
         {:else}
             <div transition:slide={{ duration: 1000 }} class="start-info">
-                <div>Расписание</div>
+                <div>Свободные аудитории</div>
                 <div>
                     на {curr_date.toLocaleDateString("ru-RU", date_opts)} -
                     {next_month.toLocaleDateString("ru-RU", date_opts)}
@@ -45,7 +45,7 @@
                 </div>
 
                 <button class="button select-tchr" on:click={openDrawer}>
-                    Выберите группу
+                    Выберите дату и время занятий
                 </button>
             </div>
         {/if}
