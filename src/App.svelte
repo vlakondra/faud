@@ -3,7 +3,12 @@
 
   import { setContext } from "svelte";
   import { fade } from "svelte/transition";
-  import { client_width, ini_data, err_sched_data } from "./Comps/store";
+  import {
+    client_width,
+    ini_data,
+    err_sched_data,
+    load_ini_data,
+  } from "./Comps/store";
 
   import Period from "./Comps/period.svelte";
   import Pairs from "./Comps/pairs.svelte";
@@ -79,15 +84,20 @@
   >
     <div class="notification">
       <button on:click={() => (openDrawer = false)} class="delete is-medium" />
-      {JSON.stringify($ini_data)}
-      {#if $ini_data.keys.length}
+      {JSON.stringify($ini_data.Pairs)}
+      {$load_ini_data}
+
+      {#if $load_ini_data == false}
+        <!-- content here -->
+
         <div class="groups-wrapper">
           <Period />
         </div>
         <div>
-          <Pairs />
+          <!-- <Pairs /> -->
         </div>
       {/if}
+      <!-- {/if} -->
 
       <DeviceDetector showInDevice="desktop">
         <!-- <ToExcel /> -->

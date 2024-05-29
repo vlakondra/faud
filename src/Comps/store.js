@@ -25,7 +25,6 @@ const esc = encodeURIComponent;
 // export default function (){
 export default function () {
     console.log('test def')
-    // const url = "https://old.ursei.su/Services/GetGSSchedIniData";
     const url_api = "https://api-1.ursei.su/schedule/GetBusyAudIniData";
     //"https://api.ursei.su/public/schedule/rest/GetGSSchedIniData";
 
@@ -41,7 +40,7 @@ export default function () {
 
         try {
             //old const response = await fetch(url,{},3000)
-            const response = await fetch(url_api, {}, 3000)
+            const response = await fetch(url_api)
             const js = await response.json();
 
             if (js.hasOwnProperty('Error')) {
@@ -65,7 +64,7 @@ export default function () {
                 // old curr_year_id.set(year_id)
                 curr_month.set(currMonth)
 
-                ini_data.set(await js)
+                ini_data.set(js)
                 console.log('ini', js)
             }
 
