@@ -39,12 +39,20 @@
     //Открывает input on Hover
     const openInput = (ev) => {
         try {
-            ev.target.focus();
+            //ev.target.focus();
+            console.log(ev);
             ev.srcElement.showPicker();
         } catch (err) {
             console.log(err);
         }
     };
+    let inputDate;
+
+    function aaa() {
+        console.log("aaa");
+
+        inputDate.blur();
+    }
 </script>
 
 <div class="calendar-wrapper">
@@ -54,6 +62,8 @@
             <div>
                 <input
                     type="date"
+                    on:mouseleave={aaa}
+                    bind:this={inputDate}
                     min={frmMinStartDate}
                     max={frmMaxStartDate}
                     on:mousemove={openInput}

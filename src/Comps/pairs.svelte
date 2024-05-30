@@ -8,15 +8,19 @@
 </script>
 
 {$load_ini_data}
-{JSON.stringify($ini_data.Pairs)}
-<table class="pairs table is-bordered is-striped is-narrow is-fullwidth">
+
+<table
+    class="pairs table is-bordered is-hoverable is-striped is-narrow is-fullwidth"
+>
     <tbody>
         <tr>
             <th>Номер</th>
             <th>Начало</th>
             <th>Конец</th>
         </tr>
-        {#if $load_ini_data == false}
+        {#if $ini_data.Pairs}
+            <!-- <p>???</p>
+            {$ini_data.Pairs.length} -->
             {#each $ini_data.Pairs as pair}
                 <tr
                     class:active={pair.PairNumb == selected}

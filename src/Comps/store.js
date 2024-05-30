@@ -21,14 +21,11 @@ export const client_width = writable(0) //ширина экрана от ResizeO
 
 const esc = encodeURIComponent;
 
-//загрузка исходных данных: форма - курс - группа
-// export default function (){
-export default function () {
-    console.log('test def')
-    const url_api = "https://api-1.ursei.su/schedule/GetBusyAudIniData";
-    //"https://api.ursei.su/public/schedule/rest/GetGSSchedIniData";
+//загрузка исходных данных: 
 
-    //const loading = writable(true) //оставить только data и export-переменные
+export default function () {
+    const url_api = "https://api-1.ursei.su/schedule/GetBusyAudIniData";
+
     const error = writable(false)
     const data = writable({})
 
@@ -64,7 +61,9 @@ export default function () {
                 // old curr_year_id.set(year_id)
                 curr_month.set(currMonth)
 
-                ini_data.set(js)
+
+                load_ini_data.set(false)
+                ini_data.set(await js)
                 console.log('ini', js)
             }
 

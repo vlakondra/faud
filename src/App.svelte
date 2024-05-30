@@ -84,20 +84,16 @@
   >
     <div class="notification">
       <button on:click={() => (openDrawer = false)} class="delete is-medium" />
-      {JSON.stringify($ini_data.Pairs)}
-      {$load_ini_data}
+      <!-- {JSON.stringify($ini_data.Pairs)} -->
 
       {#if $load_ini_data == false}
-        <!-- content here -->
-
         <div class="groups-wrapper">
           <Period />
         </div>
         <div>
-          <!-- <Pairs /> -->
+          <Pairs />
         </div>
       {/if}
-      <!-- {/if} -->
 
       <DeviceDetector showInDevice="desktop">
         <!-- <ToExcel /> -->
