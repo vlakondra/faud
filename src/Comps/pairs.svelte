@@ -1,9 +1,10 @@
 <script>
-    import { ini_data, load_ini_data } from "./store.js";
+    import { ini_data, load_ini_data, selectedPair } from "./store.js";
     let selected = 0;
 
     const onRowClick = (num) => {
         selected = num;
+        $selectedPair = num;
     };
 </script>
 

@@ -1,8 +1,6 @@
 <script>
-    import { d_start, d_end, getSched } from "./store.js";
-
-    import { add, lastDayOfMonth, format } from "date-fns";
-    //https://date-fns.org/v2.28.0/docs/add
+    import { selectedDate } from "./store.js";
+    import { format } from "date-fns";
 
     import Fa from "svelte-fa";
     import { faSync } from "@fortawesome/free-solid-svg-icons";
@@ -17,25 +15,18 @@
     };
 
     let currdate = new Date();
-
-    let startDate = currdate; ///.setDate(1); //1-й день тек. мес.
-    let frmStartDate = formatDate(startDate);
-
-    let frmMinStartDate = formatDate(currdate.setDate(1));
-    let frmMaxStartDate = formatDate(
-        add(lastDayOfMonth(currdate), { months: 1 }),
+    let mindate = formatDate(
+        new Date(currdate.getFullYear(), currdate.getMonth(), 1),
     );
-
-    let endDate = currdate.setDate(lastDayOfMonth(currdate).getDate()); //посл. день тек. мес.
-    let frmEndDate = formatDate(endDate);
-
-    //привязка store-writable переменных к значениям input'ов
-    $: d_start.update(() => frmStartDate);
-    $: d_end.update(() => frmEndDate);
+    let maxdate = formatDate(
+        new Date(currdate.getFullYear(), currdate.getMonth() + 2, 0),
+    );
+    $selectedDate = currdate.toLocaleDateString("ru-RU");
 
     const getAuds = () => {
-        console.log(frmStartDate);
+        $selectedDate = new Date(inputDate.value).toLocaleDateString("ru-RU");
     };
+
     //Открывает input on Hover
     const openInput = (ev) => {
         try {
@@ -62,12 +53,12 @@
             <div>
                 <input
                     type="date"
+                    min={mindate}
+                    max={maxdate}
                     on:mouseleave={aaa}
                     bind:this={inputDate}
-                    min={frmMinStartDate}
-                    max={frmMaxStartDate}
                     on:mousemove={openInput}
-                    bind:value={frmStartDate}
+                    bind:value={currdate}
                     on:change={() => getAuds()}
                     required
                     class="input is-success"

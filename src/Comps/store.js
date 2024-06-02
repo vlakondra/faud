@@ -1,6 +1,11 @@
 import { readable, writable } from 'svelte/store'
 // https://svelte.dev/repl/b2d671b8119845ca903667f1b3a96e31?version=3.37.0
 
+
+export const selectedDate = writable(null)//.toLocaleDateString("ru-RU"));
+export const selectedPair = writable(null);
+
+
 export const d_start = writable(null) //начало-конец периода для показа в Noschedule
 export const d_end = writable(null)
 
@@ -77,6 +82,11 @@ export default function () {
     get()
 
     // return [error, data];
+}
+
+
+export async function getAuds(date, pairid) {
+
 }
 
 export async function getSched(grp_id) { // ,year_id,month_num){

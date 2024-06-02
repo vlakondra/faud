@@ -21,6 +21,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@linways/table-to-excel": "^1.0.4",
     "date-fns": "^2.28.0",
+    "svelte-collapsible": "^0.3.0",
     "svelte-device-detector": "^0.2.2",
     "svelte-drawer-component": "^1.2.2",
     "svelte-fa": "^3.0.2",

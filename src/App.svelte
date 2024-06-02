@@ -1,9 +1,13 @@
 <script lang="javascript">
   // @ts-nocheck
 
+  //https://www.npmjs.com/package/svelte-accessible-accordion
+
   import { setContext } from "svelte";
   import { fade } from "svelte/transition";
   import {
+    selectedDate,
+    selectedPair,
     client_width,
     ini_data,
     err_sched_data,
@@ -12,12 +16,14 @@
 
   import Period from "./Comps/period.svelte";
   import Pairs from "./Comps/pairs.svelte";
+  import Auds from "./Comps/auds.svelte";
 
   // import Schedule from "./Comps/schedule.svelte";
   // import ShahSched from "./Comps/shahsched.svelte";
   import Errschedule from "./Comps/errschedule.svelte";
 
   import StartMessage from "./Comps/startmessage.svelte";
+
   import Drawer from "svelte-drawer-component";
   import ViewFormat from "./Comps/viewformat.svelte";
   import ResizeObserver from "svelte-resize-observer";
@@ -84,7 +90,6 @@
   >
     <div class="notification">
       <button on:click={() => (openDrawer = false)} class="delete is-medium" />
-      <!-- {JSON.stringify($ini_data.Pairs)} -->
 
       {#if $load_ini_data == false}
         <div class="groups-wrapper">
@@ -101,7 +106,12 @@
     </div>
   </Drawer>
   <Progbar />
-  <StartMessage openDrawer={TurnDrawer} />
+
+  {#if !$selectedPair || !$selectedDate}
+    <StartMessage openDrawer={TurnDrawer} />
+  {:else}
+    <Auds />
+  {/if}
 
   <!-- <ExcelTable /> -->
 
@@ -111,6 +121,8 @@
     <!-- </div> -->
   {:else if showtable}
     <!-- <Schedule /> -->
+    {$selectedDate}
+    <p>{$selectedPair}</p>
     0000
   {:else}
     1111
