@@ -86,7 +86,7 @@ export default function () {
 
 
 export async function getAuds(date, pairid) {
-
+    console.log(date, pairid)
 }
 
 export async function getSched(grp_id) { // ,year_id,month_num){

@@ -1,5 +1,5 @@
 <script>
-    import { selectedDate } from "./store.js";
+    import { selectedPair, selectedDate, getAuds } from "./store.js";
     import { format } from "date-fns";
 
     import Fa from "svelte-fa";
@@ -21,10 +21,14 @@
     let maxdate = formatDate(
         new Date(currdate.getFullYear(), currdate.getMonth() + 2, 0),
     );
+
     $selectedDate = currdate.toLocaleDateString("ru-RU");
 
-    const getAuds = () => {
+    const callApi = () => {
         $selectedDate = new Date(inputDate.value).toLocaleDateString("ru-RU");
+        if ($selectedPair) {
+            getAuds($selectedDate, $selectedPair);
+        }
     };
 
     //Открывает input on Hover
@@ -39,11 +43,12 @@
     };
     let inputDate;
 
-    function aaa() {
+    function blur() {
         console.log("aaa");
 
         inputDate.blur();
     }
+    let now = new Date().toISOString().slice(0, 10);
 </script>
 
 <div class="calendar-wrapper">
@@ -53,13 +58,13 @@
             <div>
                 <input
                     type="date"
+                    value={now}
                     min={mindate}
                     max={maxdate}
-                    on:mouseleave={aaa}
+                    on:mouseleave={blur}
                     bind:this={inputDate}
                     on:mousemove={openInput}
-                    bind:value={currdate}
-                    on:change={() => getAuds()}
+                    on:change={() => callApi()}
                     required
                     class="input is-success"
                 />

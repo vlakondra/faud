@@ -1,10 +1,19 @@
 <script>
-    import { ini_data, load_ini_data, selectedPair } from "./store.js";
+    import {
+        ini_data,
+        load_ini_data,
+        getAuds,
+        selectedPair,
+        selectedDate,
+    } from "./store.js";
     let selected = 0;
 
-    const onRowClick = (num) => {
+    const callApi = (num) => {
         selected = num;
         $selectedPair = num;
+        if (selectedDate) {
+            getAuds($selectedDate, num);
+        }
     };
 </script>
 
@@ -24,8 +33,8 @@
             {$ini_data.Pairs.length} -->
             {#each $ini_data.Pairs as pair}
                 <tr
-                    class:active={pair.PairNumb == selected}
-                    on:click={() => onRowClick(pair.PairNumb)}
+                    class:active={pair.Pair_ID == selected}
+                    on:click={() => callApi(pair.Pair_ID)}
                 >
                     <td>{pair.PairNumb}</td>
                     <td>{pair.TimeStart}</td>
