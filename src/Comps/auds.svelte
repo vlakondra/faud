@@ -1,6 +1,6 @@
 <script>
     import { Accordion, AccordionItem } from "svelte-collapsible";
-    import { ini_data, err_sched_data, load_ini_data } from "./store";
+    import { ini_data, busyAuds, err_sched_data, load_ini_data } from "./store";
 
     import Fa from "svelte-fa";
     import {
@@ -27,31 +27,51 @@
             </div>
         {/each}
 
-        <div>
-            <Accordion bind:key {duration} {easing}>
-                <AccordionItem key="a">
-                    <h2
-                        slot="header"
-                        on:click={() => onHeaderClick("a")}
-                        class="subtitle is-1"
-                    >
-                        <Fa icon={faCaretDown} color="#6565ed" size="0.75x" />
-                        Header
-                    </h2>
-                    <p slot="body">Body</p>
-                </AccordionItem>
-                <AccordionItem key="b">
-                    <h2
-                        slot="header"
-                        on:click={() => onHeaderClick("b")}
-                        class="subtitle is-3"
-                    >
-                        <Fa icon={faCaretUp} color="#6565ed" size="0.75x" />
-                        Header
-                    </h2>
-                    <p slot="body">Body</p>
-                </AccordionItem>
-            </Accordion>
+        <div style="margin:auto;width:600px">
+            {#if $busyAuds.Buildings}
+                <!-- content here -->
+
+                <Accordion bind:key {duration} {easing}>
+                    {#each $busyAuds.Buildings as bld}
+                        <AccordionItem key={bld.Building_ID}>
+                            <h2
+                                slot="header"
+                                on:click={() =>
+                                    onHeaderClick({ k: bld.Building_ID })}
+                                class="subtitle is-5 header"
+                            >
+                                <Fa
+                                    icon={faCaretDown}
+                                    color="#6565ed"
+                                    size="0.75x"
+                                />
+                                {bld.BuildingName}
+                            </h2>
+                            <div slot="body">
+                                {#each bld.Auds as aud}
+                                    <!-- content here -->
+                                    {#if aud.TimeStart}
+                                        <div class="audrow">
+                                            <div style="width:25%">
+                                                {aud.EmpFIO}
+                                            </div>
+                                            <div style="width:40%">
+                                                {aud.SubjName}
+                                            </div>
+                                            <div style="width:20%">
+                                                {aud.GSName}
+                                            </div>
+                                            <div style="width:15%">
+                                                {aud.Aud}
+                                            </div>
+                                        </div>
+                                    {/if}
+                                {/each}
+                            </div>
+                        </AccordionItem>
+                    {/each}
+                </Accordion>
+            {/if}
         </div>
     {/if}
 {/if}
@@ -60,7 +80,21 @@
     .building {
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
-        width: 100%;
+        justify-content: space-between;
+        width: 200px;
+        margin: auto;
+    }
+    .audrow {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        gap: 10px 10px;
+        width: 700px;
+    }
+    .header {
+        background-color: #e67f7f;
+        width: 600px;
+        text-align: left;
     }
 </style>

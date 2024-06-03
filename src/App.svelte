@@ -8,6 +8,7 @@
   import {
     selectedDate,
     selectedPair,
+    busyAuds,
     client_width,
     ini_data,
     err_sched_data,
@@ -69,6 +70,7 @@
   <title>Свободные аудитории</title>
 </svelte:head>
 
+<Progbar />
 <main class="kv-container">
   <ResizeObserver
     on:resize={(e) => {
@@ -105,7 +107,7 @@
       </DeviceDetector>
     </div>
   </Drawer>
-  <Progbar />
+  <!-- <Progbar /> -->
 
   {#if !$selectedPair || !$selectedDate}
     <StartMessage openDrawer={TurnDrawer} />
@@ -121,11 +123,10 @@
     <!-- </div> -->
   {:else if showtable}
     <!-- <Schedule /> -->
-    {$selectedDate}
-    <p>{$selectedPair}</p>
-    0000
+
+    <p></p>
   {:else}
-    1111
+    <p></p>
     <!-- <ShahSched /> -->
   {/if}
 </main>

@@ -1,10 +1,11 @@
+import { dataset_dev } from 'svelte/internal';
 import { readable, writable } from 'svelte/store'
 // https://svelte.dev/repl/b2d671b8119845ca903667f1b3a96e31?version=3.37.0
 
 
 export const selectedDate = writable(null)//.toLocaleDateString("ru-RU"));
 export const selectedPair = writable(null);
-
+export const busyAuds = writable({})
 
 export const d_start = writable(null) //начало-конец периода для показа в Noschedule
 export const d_end = writable(null)
@@ -17,7 +18,12 @@ export const curr_month = writable(0) //тек-й мес.
 export const err_ini_data = writable(false) //сообщение об ошибке при загр. ини-данных
 
 export const selected_GSName = writable("")
+
 export const load_sched_data = writable(false)
+
+
+export const data_loading = writable(false)
+
 export const err_sched_data = writable(false)
 export const scheddata = writable({})
 export const sched_data_loaded = writable(false) //была  загрузка расписания - не показ-ть startmessage
@@ -86,7 +92,34 @@ export default function () {
 
 
 export async function getAuds(date, pairid) {
+    const url_api = "https://api-1.ursei.su/schedule/GetBusyAudsOnDatePair?"
     console.log(date, pairid)
+    const params = {
+        date: date,
+        pairid: pairid
+    };
+
+    const query = Object.keys(params)
+        .map((k) => `${esc(k)}=${esc(params[k])}`)
+        .join("&");
+
+    try {
+        let x;
+        document.body.scrollIntoView()
+        data_loading.set(true)
+        const response = await fetch(url_api + query);
+
+
+        busyAuds.set(await response.json())
+        data_loading.set(false)
+
+
+    } catch (e) {
+        data_loading.set(false)
+        console.log(e)
+        // sched_data_loaded.set(true)
+        // err_sched_data.set(e)
+    }
 }
 
 export async function getSched(grp_id) { // ,year_id,month_num){
