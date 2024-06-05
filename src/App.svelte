@@ -26,10 +26,10 @@
   import StartMessage from "./Comps/startmessage.svelte";
 
   import Drawer from "svelte-drawer-component";
-  import ViewFormat from "./Comps/viewformat.svelte";
-  import ResizeObserver from "svelte-resize-observer";
-  import DeviceDetector from "svelte-device-detector";
-  import Groups from "./Comps/groups.svelte";
+  // import ViewFormat from "./Comps/viewformat.svelte";
+  // import ResizeObserver from "svelte-resize-observer";
+  // import DeviceDetector from "svelte-device-detector";
+  // import Groups from "./Comps/groups.svelte";
   // import ToExcel from "./Comps/toexcel.svelte";
   import Header from "./Comps/header.svelte";
   import Progbar from "./Comps/prgbar.svelte";
@@ -61,7 +61,7 @@
     }
   };
 
-  let w;
+  // let w;
 </script>
 
 <svelte:window bind:scrollY={scrolly} />
@@ -72,12 +72,12 @@
 
 <Progbar />
 <main class="kv-container">
-  <ResizeObserver
+  <!-- <ResizeObserver
     on:resize={(e) => {
       w = e.detail.clientWidth;
       client_width.update(() => w);
     }}
-  />
+  /> -->
 
   {#if scrolly > 100}
     <div transition:fade on:click={scrollToTop} class="totop-box">
@@ -103,13 +103,8 @@
           <Pairs />
         </div>
       {/if}
-
-      <!-- <DeviceDetector showInDevice="desktop">
-        <!-- <ToExcel /> -->
-      <!-- </DeviceDetector> --> -->
     </div>
   </Drawer>
-  <!-- <Progbar /> -->
 
   {#if !$selectedPair || !$selectedDate}
     <StartMessage openDrawer={TurnDrawer} />
@@ -117,19 +112,14 @@
     <Auds />
   {/if}
 
-  <!-- <ExcelTable /> -->
-
   {#if $err_sched_data}
     <!-- <div> -->
     <Errschedule errmessage={$err_sched_data} />
     <!-- </div> -->
   {:else if showtable}
-    <!-- <Schedule /> -->
-
     <p></p>
   {:else}
     <p></p>
-    <!-- <ShahSched /> -->
   {/if}
 </main>
 
