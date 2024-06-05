@@ -67,7 +67,7 @@
 <svelte:window bind:scrollY={scrolly} />
 
 <svelte:head>
-  <title>Свободные аудитории</title>
+  <title>Занятость аудиторий</title>
 </svelte:head>
 
 <Progbar />
@@ -84,7 +84,9 @@
       <Fa icon={faArrowCircleUp} color="#6565ed" size="2.5x" />
     </div>
   {/if}
+
   <Header onBurgerClick={TurnDrawer} />
+
   <Drawer
     open={openDrawer}
     on:clickAway={() => (openDrawer = false)}
@@ -102,9 +104,9 @@
         </div>
       {/if}
 
-      <DeviceDetector showInDevice="desktop">
+      <!-- <DeviceDetector showInDevice="desktop">
         <!-- <ToExcel /> -->
-      </DeviceDetector>
+      <!-- </DeviceDetector> --> -->
     </div>
   </Drawer>
   <!-- <Progbar /> -->
@@ -160,6 +162,7 @@
     z-index: 99999;
   }
   main.kv-container {
+    background-color: aliceblue;
     max-width: 960px !important;
     font-weight: 400;
     font-size: 1em;

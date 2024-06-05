@@ -36,7 +36,7 @@
             </div>
         {:else}
             <div transition:slide={{ duration: 1000 }} class="start-info">
-                <div>Свободные аудитории</div>
+                <div>Занятость аудиторий</div>
                 <div>
                     на {curr_date.toLocaleDateString("ru-RU", date_opts)} -
                     {next_month.toLocaleDateString("ru-RU", date_opts)}
@@ -44,8 +44,8 @@
                     {new Date().getFullYear()} г.
                 </div>
 
-                <button class="button select-tchr" on:click={openDrawer}>
-                    Выберите дату и время занятий
+                <button class="button select-pair" on:click={openDrawer}>
+                    Выберите дату <br /> и время занятий
                 </button>
             </div>
         {/if}
@@ -69,10 +69,15 @@
         color: #c9a59a; /* rgb(188 143 143 / 52%);*/
     }
 
-    .select-tchr {
+    .select-pair {
         color: rgb(0 0 255 / 63%);
         background-color: transparent;
-        font-size: 0.75em;
+        line-height: 1.75rem;
+        font-size: 1.25rem;
+
+        width: 250px;
+        margin: 20px auto;
+        padding: 30px 0;
     }
     .err {
         color: red;

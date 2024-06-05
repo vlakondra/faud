@@ -41,7 +41,7 @@
         >
             <Fa icon={faBars} />
         </div>
-        <div class="caption">Свободные аудитории</div>
+        <div class="caption">Занятость аудиторий</div>
     </div>
     <div class="time">{formatter.format(time)}</div>
 </div>
@@ -56,7 +56,7 @@
         align-content: center;
         justify-content: space-around;
         padding: 10px 0;
-        margin-top: 10px;
+        margin-top: 7px;
         margin-bottom: 25px;
         box-shadow: 1px 2px 6px 0px #5a3c3c;
         border-radius: 5px;
@@ -109,13 +109,13 @@
     }
 
     @media (max-width: 520px) {
-        .header {
-            padding: 5px 5px;
-            margin: 3px 0 0px 0;
-        }
+        // .header {
+        //     // padding: 5px 5px;
+        //     // margin: 3px 0 0px 0;
+        // }
 
         .caption {
-            font-size: 4.5vw;
+            font-size: 5.75vw;
             letter-spacing: 0px;
         }
 
@@ -124,7 +124,7 @@
         }
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 650px) {
         .date,
         .time {
             display: none;
