@@ -34,11 +34,7 @@
 <div id="header" class="header">
     <div class="date">{new Date().toLocaleDateString("ru-RU")}</div>
     <div class="caption-wrapp">
-        <div
-            class="kv-burger"
-            on:mouseenter={onBurgerClick}
-            on:click={onBurgerClick}
-        >
+        <div class="kv-burger" on:click={onBurgerClick}>
             <Fa icon={faBars} />
         </div>
         <div class="caption">Занятость аудиторий</div>
