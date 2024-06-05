@@ -114,6 +114,7 @@ export async function getAuds(date, pairid) {
         data_loading.set(false)
 
 
+
     } catch (e) {
         data_loading.set(false)
         console.log(e)

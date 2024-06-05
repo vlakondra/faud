@@ -11,7 +11,9 @@
 
     const duration = 0.25; // seconds
     const easing = "linear";
-    let key = "a";
+
+    // export let kk;
+    let key = 0;
 
     const onHeaderClick = (k) => {
         console.log(key, k);
