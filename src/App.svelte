@@ -27,7 +27,7 @@
 
   import Drawer from "svelte-drawer-component";
   // import ViewFormat from "./Comps/viewformat.svelte";
-  // import ResizeObserver from "svelte-resize-observer";
+  import ResizeObserver from "svelte-resize-observer";
   // import DeviceDetector from "svelte-device-detector";
   // import Groups from "./Comps/groups.svelte";
   // import ToExcel from "./Comps/toexcel.svelte";
@@ -61,7 +61,7 @@
     }
   };
 
-  // let w;
+  let w;
 </script>
 
 <svelte:window bind:scrollY={scrolly} />
@@ -72,12 +72,12 @@
 
 <Progbar />
 <main class="kv-container">
-  <!-- <ResizeObserver
+  <ResizeObserver
     on:resize={(e) => {
       w = e.detail.clientWidth;
       client_width.update(() => w);
     }}
-  /> -->
+  />
 
   {#if scrolly > 100}
     <div transition:fade on:click={scrollToTop} class="totop-box">
@@ -109,7 +109,7 @@
   {#if !$selectedPair || !$selectedDate}
     <StartMessage openDrawer={TurnDrawer} />
   {:else}
-    <Auds />
+    <Auds clwidth={w} />
   {/if}
 
   {#if $err_sched_data}
@@ -152,7 +152,7 @@
     z-index: 99999;
   }
   main.kv-container {
-    background-color: aliceblue;
+    // background-color: aliceblue;
     max-width: 960px !important;
     font-weight: 400;
     font-size: 1em;

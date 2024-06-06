@@ -105,10 +105,11 @@
     }
 
     @media (max-width: 520px) {
-        // .header {
-        //     // padding: 5px 5px;
-        //     // margin: 3px 0 0px 0;
-        // }
+        .header {
+            height: 40px;
+            // padding: 5px 5px;
+            // margin: 3px 0 0px 0;
+        }
 
         .caption {
             font-size: 5.75vw;
