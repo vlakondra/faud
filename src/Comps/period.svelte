@@ -51,7 +51,7 @@
     let now = new Date().toISOString().slice(0, 10);
 </script>
 
-<div class="calendar-wrapper">
+<div class="calendar-wrapper1">
     <div class="calendar-inputs">
         <div>
             <div class="calendar-txt">Дата:</div>
@@ -79,8 +79,13 @@
     }
     .calendar-inputs {
         display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 20px;
     }
-
+    .calendar-txt {
+        margin-bottom: 5px;
+    }
     /* button {
         width: 100%;
     } */

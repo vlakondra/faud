@@ -96,7 +96,7 @@
       <button on:click={() => (openDrawer = false)} class="delete is-medium" />
 
       {#if $load_ini_data == false}
-        <div class="groups-wrapper">
+        <div>
           <Period />
         </div>
         <div>
@@ -160,6 +160,7 @@
     margin-bottom: 30px;
   }
   main :global(.drawer .panel) {
+    background-color: #424251 !important;
     transition: transform 1s ease;
     color: rgb(141, 128, 203);
   }
@@ -171,13 +172,15 @@
 
   @media (min-width: 500px) {
     main :global(.drawer .panel) {
-      max-width: 350px !important;
+      // max-width: 350px !important;
+      width: 250px !important;
     }
   }
 
   @media (max-width: 500px) {
     :global(.drawer .panel) {
-      max-width: 80% !important;
+      width: 80% !important;
+      max-width: 300px;
     }
   }
 
@@ -238,8 +241,8 @@
     justify-content: center;
     align-items: center;
   }
-  .groups-wrapper {
-    max-height: 450px;
-    overflow-y: auto;
-  }
+  // .groups-wrapper {
+  //   max-height: 450px;
+  //   overflow-y: auto;
+  // }
 </style>

@@ -17,20 +17,17 @@
     };
 </script>
 
-{$load_ini_data}
-
+<div>Пары:</div>
 <table
     class="pairs table is-bordered is-hoverable is-striped is-narrow is-fullwidth"
 >
     <tbody>
         <tr>
-            <th>Номер</th>
+            <th>Пара</th>
             <th>Начало</th>
             <th>Конец</th>
         </tr>
         {#if $ini_data.Pairs}
-            <!-- <p>???</p>
-            {$ini_data.Pairs.length} -->
             {#each $ini_data.Pairs as pair}
                 <tr
                     class:active={pair.Pair_ID == selected}
@@ -46,11 +43,18 @@
 </table>
 
 <style>
+    .pairs {
+        margin: 5px auto;
+    }
+    th {
+        font-size: 0.8em;
+    }
     .pairs td {
         cursor: pointer;
     }
     .active {
-        background-color: red !important;
+        background-color: #e67f7f !important;
         color: azure !important;
+        font-weight: 500;
     }
 </style>
