@@ -159,6 +159,9 @@
     min-height: 100vh;
     margin-bottom: 30px;
   }
+  main :global(.drawer .overlay) {
+    background: hsl(0deg 0% 39.22% / 30%);
+  }
   main :global(.drawer .panel) {
     background-color: #424251 !important;
     transition: transform 1s ease;
