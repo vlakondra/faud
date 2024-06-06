@@ -72,7 +72,7 @@
                                             icon={bld.Building_ID == key
                                                 ? faCaretUp
                                                 : faCaretDown}
-                                            color="yellow"
+                                            color="#7bdc7f"
                                             size="1.5x"
                                         />
                                     </div>
@@ -126,7 +126,9 @@
                                         </tbody>
                                     </table>
                                 {:else}
-                                    <p>Все аудитории свободны</p>
+                                    <p class="allfree">
+                                        Все аудитории свободны
+                                    </p>
                                 {/if}
                             </div>
                         </AccordionItem>
@@ -152,18 +154,22 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background-color: #ff9393;
+        background-color: #e67f7f;
+        color: whitesmoke;
         line-height: 2em;
         width: 100%;
         padding: 0 5px;
         /* max-width: 600px; */
         text-align: left;
+        border-bottom: 1px solid #c6c6e3;
     }
     .caret {
         margin-top: 5px;
     }
     tr th {
         font-size: 0.8em;
+        background-color: #7bdc7f;
+        border-bottom: 3px solid rgb(188, 148, 148);
     }
     .info {
         display: flex;
@@ -173,6 +179,12 @@
         font-weight: 600;
         color: #2e5c2d;
         letter-spacing: 1px;
-        font-size: 0.75em;
+        font-size: 0.8em;
+    }
+    .allfree {
+        padding: 10px;
+        background-color: #f4eded;
+        font-weight: 600;
+        color: #8476b4;
     }
 </style>
