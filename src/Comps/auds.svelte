@@ -1,6 +1,12 @@
 <script>
     import { Accordion, AccordionItem } from "svelte-collapsible";
-    import { ini_data, busyAuds, err_sched_data, load_ini_data } from "./store";
+    import {
+        ini_data,
+        busyAuds,
+        err_sched_data,
+        load_ini_data,
+        accordKey,
+    } from "./store";
 
     import Fa from "svelte-fa";
     import {
@@ -12,8 +18,11 @@
     const duration = 0.25; // seconds
     const easing = "linear";
 
-    // export let kk;
-    let key = 0;
+    let key = $accordKey;
+    accordKey.subscribe((v) => {
+        //https://thoughtspile.github.io/2023/04/22/svelte-stores/
+        key = v;
+    });
 
     const onHeaderClick = (k) => {
         console.log(key, k);
@@ -24,6 +33,7 @@
     {#if $ini_data.Buildings}
         {#each $ini_data.Buildings as bld}
             <div class="building">
+                <p>{key}</p>
                 <div>{bld.BuildingName}</div>
                 <div>{bld.Auds.length}</div>
             </div>
@@ -31,8 +41,6 @@
 
         <div style="margin:auto;width:600px">
             {#if $busyAuds.Buildings}
-                <!-- content here -->
-
                 <Accordion bind:key {duration} {easing}>
                     {#each $busyAuds.Buildings as bld}
                         <AccordionItem key={bld.Building_ID}>
@@ -42,33 +50,51 @@
                                     onHeaderClick({ k: bld.Building_ID })}
                                 class="subtitle is-5 header"
                             >
-                                <Fa
-                                    icon={faCaretDown}
-                                    color="#6565ed"
-                                    size="0.75x"
-                                />
-                                {bld.BuildingName}
+                                <div
+                                    style="display:flex;justify-content: space-between;"
+                                >
+                                    <div style="display:flex;">
+                                        <Fa
+                                            icon={bld.Building_ID == key
+                                                ? faCaretUp
+                                                : faCaretDown}
+                                            color="#6565ed"
+                                            size="1.5x"
+                                        />
+
+                                        <div>
+                                            {bld.BuildingName}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        Занято {bld.busyCnt} аудиторий из {bld
+                                            .Auds.length}
+                                    </div>
+                                </div>
                             </h2>
                             <div slot="body">
-                                {#each bld.Auds as aud}
-                                    <!-- content here -->
-                                    {#if aud.TimeStart}
-                                        <div class="audrow">
-                                            <div style="width:25%">
-                                                {aud.EmpFIO}
-                                            </div>
-                                            <div style="width:40%">
+                                {#if bld.busyCnt > 0}
+                                    {#each bld.Auds as aud}
+                                        {#if aud.TimeStart}
+                                            <div class="audrow">
+                                                <div style="width:25%">
+                                                    {aud.EmpFIO}
+                                                </div>
+                                                <!-- <div style="width:40%">
                                                 {aud.SubjName}
+                                            </div> -->
+                                                <div style="width:20%">
+                                                    {aud.GSName}
+                                                </div>
+                                                <div style="width:15%">
+                                                    {aud.Aud}
+                                                </div>
                                             </div>
-                                            <div style="width:20%">
-                                                {aud.GSName}
-                                            </div>
-                                            <div style="width:15%">
-                                                {aud.Aud}
-                                            </div>
-                                        </div>
-                                    {/if}
-                                {/each}
+                                        {/if}
+                                    {/each}
+                                {:else}
+                                    <p>Все аудитории свободны</p>
+                                {/if}
                             </div>
                         </AccordionItem>
                     {/each}

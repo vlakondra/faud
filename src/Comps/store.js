@@ -7,6 +7,8 @@ export const selectedDate = writable(null)//.toLocaleDateString("ru-RU"));
 export const selectedPair = writable(null);
 export const busyAuds = writable({})
 
+export const accordKey = writable(0)
+
 export const d_start = writable(null) //начало-конец периода для показа в Noschedule
 export const d_end = writable(null)
 
@@ -109,9 +111,18 @@ export async function getAuds(date, pairid) {
         data_loading.set(true)
         const response = await fetch(url_api + query);
 
+        let blds = await response.json()
+        //считаем кол-во занятых аудиторий
+        for (const bld of blds.Buildings) {
+            let busyAuds = bld.Auds.filter((a) => a.TimeStart != null).length
+            bld.busyCnt = busyAuds
+        }
 
-        busyAuds.set(await response.json())
+        busyAuds.set(blds) //await response.json())
         data_loading.set(false)
+
+        accordKey.set(0)
+        accordKey.set(1)
 
 
 
