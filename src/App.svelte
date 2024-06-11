@@ -1,16 +1,13 @@
 <script lang="javascript">
   // @ts-nocheck
 
-  //https://www.npmjs.com/package/svelte-accessible-accordion
-
   import { setContext } from "svelte";
   import { fade } from "svelte/transition";
   import {
     selectedDate,
     selectedPair,
-    busyAuds,
+    err_ini_data,
     client_width,
-    ini_data,
     err_sched_data,
     load_ini_data,
   } from "./Comps/store";
@@ -18,23 +15,11 @@
   import Period from "./Comps/period.svelte";
   import Pairs from "./Comps/pairs.svelte";
   import Auds from "./Comps/auds.svelte";
-
-  // import Schedule from "./Comps/schedule.svelte";
-  // import ShahSched from "./Comps/shahsched.svelte";
-  import Errschedule from "./Comps/errschedule.svelte";
-
   import StartMessage from "./Comps/startmessage.svelte";
-
   import Drawer from "svelte-drawer-component";
-  // import ViewFormat from "./Comps/viewformat.svelte";
   import ResizeObserver from "svelte-resize-observer";
-  // import DeviceDetector from "svelte-device-detector";
-  // import Groups from "./Comps/groups.svelte";
-  // import ToExcel from "./Comps/toexcel.svelte";
   import Header from "./Comps/header.svelte";
   import Progbar from "./Comps/prgbar.svelte";
-  // import ExcelTable from "./Comps/exceltable.svelte";
-
   import Fa from "svelte-fa";
   import { faArrowCircleUp } from "@fortawesome/free-solid-svg-icons";
 
@@ -46,9 +31,6 @@
   setContext("turn_drawer", { TurnDrawer });
 
   let showtable = true;
-  const ToggleSwitch = (/** @type {boolean} */ frm) => {
-    showtable = frm;
-  };
 
   let scrolly = 5;
   const scrollToTop = () => {
@@ -87,39 +69,34 @@
 
   <Header onBurgerClick={TurnDrawer} />
 
-  <Drawer
-    open={openDrawer}
-    on:clickAway={() => (openDrawer = false)}
-    size="null"
-  >
-    <div class="notification">
-      <button on:click={() => (openDrawer = false)} class="delete is-medium" />
+  {#if !$err_ini_data}
+    <Drawer
+      open={openDrawer}
+      on:clickAway={() => (openDrawer = false)}
+      size="null"
+    >
+      <div class="notification">
+        <button
+          on:click={() => (openDrawer = false)}
+          class="delete is-medium"
+        />
 
-      {#if $load_ini_data == false}
-        <div>
-          <Period />
-        </div>
-        <div>
-          <Pairs />
-        </div>
-      {/if}
-    </div>
-  </Drawer>
+        {#if $load_ini_data == false}
+          <div>
+            <Period />
+          </div>
+          <div>
+            <Pairs />
+          </div>
+        {/if}
+      </div>
+    </Drawer>
+  {/if}
 
   {#if !$selectedPair || !$selectedDate}
     <StartMessage openDrawer={TurnDrawer} />
   {:else}
     <Auds clwidth={w} />
-  {/if}
-
-  {#if $err_sched_data}
-    <!-- <div> -->
-    <Errschedule errmessage={$err_sched_data} />
-    <!-- </div> -->
-  {:else if showtable}
-    <p></p>
-  {:else}
-    <p></p>
   {/if}
 </main>
 
@@ -132,7 +109,6 @@
     cursor: pointer;
     padding: 5px 7px;
     background-color: #e67f7f;
-    // background-color: #45a6d6;
     color: #eef9f9;
     border-bottom: 1px solid rgb(195, 195, 251);
     font-style: oblique;
@@ -152,7 +128,6 @@
     z-index: 99999;
   }
   main.kv-container {
-    // background-color: aliceblue;
     max-width: 960px !important;
     font-weight: 400;
     font-size: 1em;
@@ -193,7 +168,6 @@
   }
 
   :global(.gsnodes.open) {
-    //margin-left: 0px;
     opacity: 1;
     font-size: 1em;
     max-height: 900px;
@@ -244,8 +218,4 @@
     justify-content: center;
     align-items: center;
   }
-  // .groups-wrapper {
-  //   max-height: 450px;
-  //   overflow-y: auto;
-  // }
 </style>

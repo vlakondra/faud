@@ -1,6 +1,6 @@
 <script>
     import iniData from "./store.js";
-    import { load_ini_data, err_ini_data, sched_data_loaded } from "./store";
+    import { load_ini_data, err_ini_data } from "./store";
     import { fade, slide } from "svelte/transition";
     import Fa from "svelte-fa";
     import { faSpinner } from "@fortawesome/free-solid-svg-icons";
@@ -23,34 +23,35 @@
     {/each}
 {/if} -->
 
-{#if !$sched_data_loaded}
-    <div class="start-message">
-        {#if $load_ini_data}
-            <Fa icon={faSpinner} size="3x" spin color="blue" />
-        {:else if $err_ini_data}
+<!-- {#if !$sched_data_loaded} -->
+<div class="start-message">
+    {#if $load_ini_data}
+        <Fa icon={faSpinner} size="3x" spin color="blue" />
+    {:else if $err_ini_data}
+        <div>
+            <p class="err">Ошибка!</p>
+            <p>
+                {$err_ini_data}
+            </p>
+        </div>
+    {:else}
+        <div transition:slide={{ duration: 1000 }} class="start-info">
+            <div>Занятость аудиторий</div>
             <div>
-                <p class="err">Ошибка!</p>
-                <p>
-                    {$err_ini_data}
-                </p>
+                на {curr_date.toLocaleDateString("ru-RU", date_opts)} -
+                {next_month.toLocaleDateString("ru-RU", date_opts)}
+                <br />
+                {new Date().getFullYear()} г.
             </div>
-        {:else}
-            <div transition:slide={{ duration: 1000 }} class="start-info">
-                <div>Занятость аудиторий</div>
-                <div>
-                    на {curr_date.toLocaleDateString("ru-RU", date_opts)} -
-                    {next_month.toLocaleDateString("ru-RU", date_opts)}
-                    <br />
-                    {new Date().getFullYear()} г.
-                </div>
 
-                <button class="button select-pair" on:click={openDrawer}>
-                    Выберите дату <br /> и время занятий
-                </button>
-            </div>
-        {/if}
-    </div>
-{/if}
+            <button class="button select-pair" on:click={openDrawer}>
+                Выберите дату <br /> и время занятий
+            </button>
+        </div>
+    {/if}
+</div>
+
+<!-- {/if} -->
 
 <style>
     .start-message {

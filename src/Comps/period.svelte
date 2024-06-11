@@ -35,7 +35,6 @@
     const openInput = (ev) => {
         try {
             //ev.target.focus();
-            console.log(ev);
             ev.srcElement.showPicker();
         } catch (err) {
             console.log(err);
@@ -44,8 +43,6 @@
     let inputDate;
 
     function blur() {
-        console.log("aaa");
-
         inputDate.blur();
     }
     let now = new Date().toISOString().slice(0, 10);

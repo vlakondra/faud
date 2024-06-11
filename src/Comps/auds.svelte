@@ -1,5 +1,6 @@
 <script>
     import { Accordion, AccordionItem } from "svelte-collapsible";
+    import Errschedule from "./errschedule.svelte";
     import {
         selectedDate,
         selectedPair,
@@ -43,99 +44,107 @@
 </script>
 
 {#if !$load_ini_data}
-    {#if $ini_data.Buildings}
-        <div class="audcontainer">
-            <div class="info">
-                <div>
-                    {new Date(
-                        $selectedDate.split(".")[2],
-                        $selectedDate.split(".")[1] - 1,
-                        $selectedDate.split(".")[0],
-                    ).toLocaleDateString("ru-RU", options)}
-                </div>
-                <div style="display: flex;flex-direction: row;">
+    {#if !$err_sched_data}
+        {#if $ini_data.Buildings}
+            <div class="audcontainer">
+                <div class="info">
                     <div>
-                        {currPair.PairNumb} пара,
+                        {new Date(
+                            $selectedDate.split(".")[2],
+                            $selectedDate.split(".")[1] - 1,
+                            $selectedDate.split(".")[0],
+                        ).toLocaleDateString("ru-RU", options)}
                     </div>
-                    <div>{currPair.TimeStart} - {currPair.TimeEnd}</div>
+                    <div style="display: flex;flex-direction: row;">
+                        <div>
+                            {currPair.PairNumb} пара,
+                        </div>
+                        <div>{currPair.TimeStart} - {currPair.TimeEnd}</div>
+                    </div>
                 </div>
+
+                {#if $busyAuds.Buildings}
+                    <Accordion bind:key {duration} {easing}>
+                        {#each $busyAuds.Buildings as bld}
+                            <AccordionItem key={bld.Building_ID}>
+                                <h2 slot="header" class="subtitle is-6 header">
+                                    <div style="display:flex;">
+                                        <div class="caret">
+                                            <Fa
+                                                icon={bld.Building_ID == key
+                                                    ? faCaretUp
+                                                    : faCaretDown}
+                                                color="#7bdc7f"
+                                                size="1.5x"
+                                            />
+                                        </div>
+                                        <div
+                                            style="margin-left: 5px;margin-top: 2px;"
+                                        >
+                                            {bld.BuildingName}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        Занято {bld.busyCnt} из {$ini_data.Buildings.filter(
+                                            (b) =>
+                                                b.Building_ID ==
+                                                bld.Building_ID,
+                                        )[0].Auds.length}
+                                    </div>
+                                </h2>
+                                <div slot="body">
+                                    {#if bld.busyCnt > 0}
+                                        <table
+                                            class="table is-bordered is-hoverable is-striped is-narrow is-fullwidth"
+                                        >
+                                            <tbody>
+                                                <tr>
+                                                    {#if clwidth < 500}
+                                                        <th>Ауд-ия</th>
+                                                        <th>Преп-ль</th>
+                                                        <th>Группы</th>
+                                                    {:else}
+                                                        <th>Аудитория</th>
+                                                        <th>Преподаватель</th>
+                                                        <th>Группы</th>
+                                                    {/if}
+                                                </tr>
+
+                                                {#each bld.Auds as aud}
+                                                    {#if aud.TimeStart}
+                                                        <tr>
+                                                            <td>
+                                                                {aud.Aud}
+                                                            </td>
+                                                            <td>
+                                                                {aud.EmpFIO}
+                                                            </td>
+                                                            <td>
+                                                                {#each aud.GSName.split(",") as grp}
+                                                                    <div>
+                                                                        {grp}
+                                                                    </div>
+                                                                {/each}
+                                                            </td>
+                                                        </tr>
+                                                    {/if}
+                                                {/each}
+                                            </tbody>
+                                        </table>
+                                    {:else}
+                                        <p class="allfree">
+                                            Все аудитории свободны
+                                        </p>
+                                    {/if}
+                                </div>
+                            </AccordionItem>
+                        {/each}
+                    </Accordion>
+                {/if}
             </div>
-
-            {#if $busyAuds.Buildings}
-                <Accordion bind:key {duration} {easing}>
-                    {#each $busyAuds.Buildings as bld}
-                        <AccordionItem key={bld.Building_ID}>
-                            <h2 slot="header" class="subtitle is-6 header">
-                                <div style="display:flex;">
-                                    <div class="caret">
-                                        <Fa
-                                            icon={bld.Building_ID == key
-                                                ? faCaretUp
-                                                : faCaretDown}
-                                            color="#7bdc7f"
-                                            size="1.5x"
-                                        />
-                                    </div>
-                                    <div
-                                        style="margin-left: 5px;margin-top: 2px;"
-                                    >
-                                        {bld.BuildingName}
-                                    </div>
-                                </div>
-                                <div>
-                                    Занято {bld.busyCnt} из {$ini_data.Buildings.filter(
-                                        (b) => b.Building_ID == bld.Building_ID,
-                                    )[0].Auds.length}
-                                </div>
-                            </h2>
-                            <div slot="body">
-                                {#if bld.busyCnt > 0}
-                                    <table
-                                        class="table is-bordered is-hoverable is-striped is-narrow is-fullwidth"
-                                    >
-                                        <tbody>
-                                            <tr>
-                                                {#if clwidth < 500}
-                                                    <th>Ауд-ия</th>
-                                                    <th>Преп-ль</th>
-                                                    <th>Группы</th>
-                                                {:else}
-                                                    <th>Аудитория</th>
-                                                    <th>Преподаватель</th>
-                                                    <th>Группы</th>
-                                                {/if}
-                                            </tr>
-
-                                            {#each bld.Auds as aud}
-                                                {#if aud.TimeStart}
-                                                    <tr>
-                                                        <td>
-                                                            {aud.Aud}
-                                                        </td>
-                                                        <td>
-                                                            {aud.EmpFIO}
-                                                        </td>
-                                                        <td>
-                                                            {#each aud.GSName.split(",") as grp}
-                                                                <div>{grp}</div>
-                                                            {/each}
-                                                        </td>
-                                                    </tr>
-                                                {/if}
-                                            {/each}
-                                        </tbody>
-                                    </table>
-                                {:else}
-                                    <p class="allfree">
-                                        Все аудитории свободны
-                                    </p>
-                                {/if}
-                            </div>
-                        </AccordionItem>
-                    {/each}
-                </Accordion>
-            {/if}
-        </div>
+        {/if}
+    {:else}
+        <Errschedule errmessage={$err_sched_data} />
     {/if}
 {/if}
 
