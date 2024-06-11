@@ -2,9 +2,6 @@
     import { selectedPair, selectedDate, getAuds } from "./store.js";
     import { format } from "date-fns";
 
-    import Fa from "svelte-fa";
-    import { faSync } from "@fortawesome/free-solid-svg-icons";
-
     const formatDate = (d) => {
         let frm = "yyyy-MM-dd";
         if (d) {
@@ -48,32 +45,27 @@
     let now = new Date().toISOString().slice(0, 10);
 </script>
 
-<div class="calendar-wrapper1">
-    <div class="calendar-inputs">
+<div class="calendar-inputs">
+    <div>
+        <div class="calendar-txt">Дата:</div>
         <div>
-            <div class="calendar-txt">Дата:</div>
-            <div>
-                <input
-                    type="date"
-                    value={now}
-                    min={mindate}
-                    max={maxdate}
-                    on:mouseleave={blur}
-                    bind:this={inputDate}
-                    on:mousemove={openInput}
-                    on:change={() => callApi()}
-                    required
-                    class="input is-success"
-                />
-            </div>
+            <input
+                type="date"
+                value={now}
+                min={mindate}
+                max={maxdate}
+                on:mouseleave={blur}
+                bind:this={inputDate}
+                on:mousemove={openInput}
+                on:change={() => callApi()}
+                required
+                class="input is-success"
+            />
         </div>
     </div>
 </div>
 
 <style>
-    .calendar-wrapper {
-        padding: 10px 0;
-    }
     .calendar-inputs {
         display: flex;
         flex-direction: column;
@@ -83,13 +75,7 @@
     .calendar-txt {
         margin-bottom: 5px;
     }
-    /* button {
-        width: 100%;
-    } */
 
-    /* .error-row {
-        text-align: center;
-    } */
     @media (min-width: 500.5px) {
         .calendar-inputs {
             justify-content: space-around;
@@ -118,10 +104,5 @@
 
             /* font-family: Roboto; */
         }
-    }
-    .errmessage {
-        color: red;
-        letter-spacing: 1px;
-        font-weight: 400;
     }
 </style>

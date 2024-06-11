@@ -160,6 +160,9 @@
       width: 80% !important;
       max-width: 300px;
     }
+    main {
+      padding: 0 5px;
+    }
   }
 
   :global(.active-group) {
